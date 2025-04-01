@@ -1,0 +1,54 @@
+name: New project
+description: Suggest a new project
+labels: ["new project"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ny prosjektforslag
+  - type: textarea
+    id: description
+    attributes:
+      label: Grunninformasjon
+      placeholder: Text here
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Samarbeid med
+      placeholder: Navn til person
+  - type: textarea
+    id: connection
+    attributes:
+      label: Avhengigheter til andre prosjekt
+      placeholder: Prosjekt navn
+  - type: checkboxes
+    id: avdeling
+    attributes:
+      label: Fra hvilken avdeling
+      options: 
+        -label: BOD
+        -label: DSS
+        -label: FEL
+        -label: KOM
+        -label: STL
+        -label: TUU
+        -label: VIS
+  - type: textarea
+    id: resources
+    attributes:
+      label: Ressurser
+      placeholder: |
+        Beskriv tekniske ressurser som trenges til dette
+  - type: textarea
+    id: competence
+    attributes:
+      label: Hvilke kompetanse trengs til dette?
+      placeholder: |
+        Beskriv kompetanse
+  - type: markdown
+    attributes:
+      value: |
+        Takk!
