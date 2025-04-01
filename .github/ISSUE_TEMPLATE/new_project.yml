@@ -28,13 +28,13 @@ body:
     attributes:
       label: Fra hvilken avdeling
       options: 
-        -label: BOD
-        -label: DSS
-        -label: FEL
-        -label: KOM
-        -label: STL
-        -label: TUU
-        -label: VIS
+        - label: BOD
+        - label: DSS
+        - label: FEL
+        - label: KOM
+        - label: STL
+        - label: TUU
+        - label: VIS
   - type: textarea
     id: resources
     attributes:
