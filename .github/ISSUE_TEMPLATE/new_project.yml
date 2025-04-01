@@ -1,7 +1,6 @@
 name: New projectYML
 description: Suggest a new project
 labels: ["new project"]
-
 body:
   - type: markdown
     attributes:
