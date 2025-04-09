@@ -28,3 +28,26 @@ print(f"{sentence_a} {sentence_b}")
 # MARKDOWN ********************
 
 # ## This is a test notebook
+
+# CELL ********************
+
+5+5
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+# MAGIC %%sparkr
+# MAGIC 10+10
+
+# METADATA ********************
+
+# META {
+# META   "language": "r",
+# META   "language_group": "synapse_pyspark"
+# META }
