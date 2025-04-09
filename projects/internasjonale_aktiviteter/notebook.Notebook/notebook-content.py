@@ -1,5 +1,7 @@
-# Fabric notebook source
+import pandas as pd
 
+def main():
+    print("hello world")
 
-# CELL ********************
-
+if __name__ == "__main__":
+    main()
