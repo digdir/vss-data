@@ -1,0 +1,27 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: nb-NO
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Porteføljeprosjekter","MSCW_sort","Prosjektkategori","Status250225","Merge1","MSCW_order","Portfolio_data"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.141.1253.0 (25.03)+74f9999a1e95f78c739f3ea2b96ba340e9ba8729
+
+ref table Porteføljeprosjekter
+ref table MSCW_sort
+ref table Prosjektkategori
+ref table Status250225
+ref table DateTableTemplate_f83b4389-306f-49b0-90ec-1081b55c9eac
+ref table LocalDateTable_d000d3a8-c0be-43ac-b8c9-b70d5ba3a6ec
+ref table LocalDateTable_5410888f-edd0-48c0-a659-109219def9f2
+ref table Merge1
+ref table MSCW_order
+ref table Portfolio_data
+
+ref cultureInfo en-US
+

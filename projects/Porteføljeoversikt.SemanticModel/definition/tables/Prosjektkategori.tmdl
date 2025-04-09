@@ -1,0 +1,36 @@
+table Prosjektkategori
+	lineageTag: 6de353a6-a184-4ffd-9a44-8c69379bdc52
+
+	column Nr
+		dataType: string
+		lineageTag: c35b84e3-ec3f-4c9c-8a4b-2cb526c934ba
+		summarizeBy: none
+		sourceColumn: Nr
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gruppe
+		dataType: string
+		lineageTag: c7e842c5-3ec3-4c16-8a52-b72977ff31b9
+		summarizeBy: none
+		sourceColumn: Gruppe
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Prosjektkategori = m
+		mode: import
+		source =
+				let
+				    Source = SharePoint.Files("https://digdir.sharepoint.com/sites/Portefljeoversikt/", [ApiVersion = 15]),
+				    #"Porteføljeoversikt xlsx_https://digdir sharepoint com/sites/Portefljeoversikt/Delte dokumenter/General/" = Source{[Name="Porteføljeoversikt.xlsx",#"Folder Path"="https://digdir.sharepoint.com/sites/Portefljeoversikt/Delte dokumenter/General/"]}[Content],
+				    #"Imported Excel Workbook" = Excel.Workbook(#"Porteføljeoversikt xlsx_https://digdir sharepoint com/sites/Portefljeoversikt/Delte dokumenter/General/"),
+				    Prosjektkategori_Sheet = #"Imported Excel Workbook"{[Item="Prosjektkategori",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Prosjektkategori_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Nr", type text}, {"Gruppe", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

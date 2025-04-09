@@ -1,0 +1,36 @@
+table MSCW_sort
+	lineageTag: 34d6b868-29cd-4a92-87a0-68ca34b7ce89
+
+	column MSCW
+		dataType: string
+		lineageTag: daa9fe2a-97d8-49f8-b82f-d35e57fabde5
+		summarizeBy: none
+		sourceColumn: MSCW
+		sortByColumn: Sort
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sort
+		dataType: int64
+		formatString: 0
+		lineageTag: 8535e240-9df3-48a3-af00-5fa71c140ebd
+		summarizeBy: none
+		sourceColumn: Sort
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MSCW_sort = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45W8lXSUTJUitWJVgoGsozALGcgyxjMCgeyTJRiYwE=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [MSCW = _t, Sort = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"MSCW", type text}, {"Sort", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

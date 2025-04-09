@@ -1,0 +1,149 @@
+table Portfolio_data
+	lineageTag: ba547ace-57b9-411f-82a2-e5241581a73c
+
+	column Avdeling
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: e62d8178-a835-4d0e-98ff-06cd05307236
+		summarizeBy: none
+		sourceColumn: Avdeling
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nr
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 822a2627-6ec0-4daa-b3d1-81fdc734f307
+		summarizeBy: none
+		sourceColumn: Nr
+
+		annotation SummarizationSetBy = Automatic
+
+	column Navn_på_tiltak
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 983361c7-1e4e-4311-8c40-1aae40936e9f
+		summarizeBy: none
+		sourceColumn: Navn_på_tiltak
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gruppe
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: ec329416-e0b2-4640-9965-7405135568cd
+		summarizeBy: none
+		sourceColumn: Gruppe
+
+		annotation SummarizationSetBy = Automatic
+
+	column Kontaktperson
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d0b03b02-632d-4db8-9f42-85e941c58d7b
+		summarizeBy: none
+		sourceColumn: Kontaktperson
+
+		annotation SummarizationSetBy = Automatic
+
+	column MSCW
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 83ffc278-781c-4c5f-b481-8257d503efce
+		summarizeBy: none
+		sourceColumn: MSCW
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mnd.verk'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 44a3a63e-3ca6-44d2-8626-7d5aa13c6cbb
+		summarizeBy: sum
+		sourceColumn: Mnd.verk
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Vedtatt_tildeling_17.des._24'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 8c959e22-937a-4351-8a49-84539dd6e997
+		summarizeBy: sum
+		sourceColumn: Vedtatt_tildeling_17.des._24
+
+		annotation SummarizationSetBy = Automatic
+
+	column Potensiell_finansiering_2025
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 26fb9357-0e89-4f36-8171-c2b6a8cdb956
+		summarizeBy: sum
+		sourceColumn: Potensiell_finansiering_2025
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sum_
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: d7f6f8ae-3858-434e-afbe-7d3c7349fb7d
+		summarizeBy: sum
+		sourceColumn: Sum_
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tentativ_forplitelse_2026_osv.'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 2b75983a-51fc-44ce-862c-c4a9084268c3
+		summarizeBy: sum
+		sourceColumn: Tentativ_forplitelse_2026_osv.
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Estimert_budsjettbehov_fra_avd.'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: aa4db58e-5ee1-4505-ba53-8fa1d94b50f8
+		summarizeBy: sum
+		sourceColumn: Estimert_budsjettbehov_fra_avd.
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ev._forklaring'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 46a0f1b9-e84c-46e9-af6f-faaf91e0f4d6
+		summarizeBy: none
+		sourceColumn: Ev._forklaring
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdate
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 9a0d0da0-a4e2-49e8-b150-a37979de2b4d
+		summarizeBy: none
+		sourceColumn: LastUpdate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Portfolio_data = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Database("b5li4afpbdwezicwwnkeoubzse-m3nesqac3ueepkmopydvg35o3y.datawarehouse.fabric.microsoft.com", "ProjectPortfolio"),
+				    dbo_Portfolio_data = Source{[Schema="dbo",Item="Portfolio_data"]}[Data]
+				in
+				    dbo_Portfolio_data
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Porteføljeoversikt"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "43dc6695-c4b2-81be-45e9-2515499bd08d"
+  }
+}

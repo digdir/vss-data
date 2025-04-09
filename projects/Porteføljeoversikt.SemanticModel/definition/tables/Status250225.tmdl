@@ -1,0 +1,155 @@
+table Status250225
+	lineageTag: 19a3e3ae-5658-42bc-abc8-125358ac698c
+
+	column ID
+		dataType: double
+		lineageTag: 33690287-6c04-464d-9243-8f78df1f05d4
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Starttidspunkt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1aa866e7-967d-4b59-9bf5-569bb913e73d
+		summarizeBy: none
+		sourceColumn: Starttidspunkt
+
+		variation Variation
+			isDefault
+			relationship: ebb7c31a-5826-4c29-af2d-b117a4225f19
+			defaultHierarchy: LocalDateTable_d000d3a8-c0be-43ac-b8c9-b70d5ba3a6ec.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fullføringstidspunkt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ac2b4bdf-ccc5-44c4-9974-cafeae6319f1
+		summarizeBy: none
+		sourceColumn: Fullføringstidspunkt
+
+		variation Variation
+			isDefault
+			relationship: 50753c1d-9342-407b-9cd4-1f956e678f60
+			defaultHierarchy: LocalDateTable_5410888f-edd0-48c0-a659-109219def9f2.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column E-postadresse
+		dataType: string
+		lineageTag: 12f8cff8-c983-42f9-8fff-f4d1fcae210b
+		summarizeBy: none
+		sourceColumn: E-postadresse
+
+		annotation SummarizationSetBy = Automatic
+
+	column Navn
+		dataType: string
+		lineageTag: 9745ad7c-0fca-4072-804f-0428b2258a58
+		summarizeBy: none
+		sourceColumn: Navn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tidspunkt for siste endring'
+		dataType: string
+		lineageTag: 0d5e9b83-f59f-42de-87b4-ea2eb711a77e
+		summarizeBy: none
+		sourceColumn: Tidspunkt for siste endring
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Navn på tiltak: Legg inn navn på tiltaket som du rapporterer på. Sjekk om navnet på tiltaket i oversikten er beskrivende og lett for andre å forstå. Forkort gjerne langt navn. Ev. nytt navn legg...'
+		dataType: string
+		lineageTag: 7e0a935a-97e5-47b6-96ee-873041e472f9
+		summarizeBy: none
+		sourceColumn: Navn på tiltak: Legg inn navn på tiltaket som du rapporterer på. Sjekk om navnet på tiltaket i oversikten er beskrivende og lett for andre å forstå. Forkort gjerne langt navn. Ev. nytt navn legg...
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Kontaktperson: Sjekk om det står riktig kontaktperson i oversikten. Ev. ny kontaktperson legges i svaret.'
+		dataType: string
+		lineageTag: c1ece9be-9517-4d91-9e36-6f3f5926155e
+		summarizeBy: none
+		sourceColumn: Kontaktperson: Sjekk om det står riktig kontaktperson i oversikten. Ev. ny kontaktperson legges i svaret.
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nåværende Fase (ref. prosjektveiviseren for faseinndeling)'
+		dataType: string
+		lineageTag: 4b49a616-5c2c-4ff4-b562-39de91b9e532
+		summarizeBy: none
+		sourceColumn: Nåværende Fase (ref. prosjektveiviseren for faseinndeling)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fremdrift: Legg inn nåværende status.'
+		dataType: string
+		lineageTag: beaae198-7981-4802-99a1-63aaff2eaf58
+		summarizeBy: none
+		sourceColumn: Fremdrift: Legg inn nåværende status.
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Anskaffelse av konsulentbidstand: hvor godt tilgjengeligheten av konsulenter er sikret.'
+		dataType: string
+		lineageTag: 804f2900-db1f-49fc-8f0a-fd1171f67bc0
+		summarizeBy: none
+		sourceColumn: Anskaffelse av konsulentbidstand: hvor godt tilgjengeligheten av konsulenter er sikret.
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ev. kommentar til fase, fremdriften og konsulentbistand'
+		dataType: string
+		lineageTag: 498a0494-3489-490b-8376-cd0c20b6fc64
+		summarizeBy: none
+		sourceColumn: Ev. kommentar til fase, fremdriften og konsulentbistand
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ev. endring i budsjettbehov (ift. vedtatt budsjett og potensiell budsjett - kolonne I og J i oversikten)'
+		dataType: string
+		lineageTag: 28ca93a2-5af6-41bc-a271-1427a8c9c2d1
+		summarizeBy: none
+		sourceColumn: Ev. endring i budsjettbehov (ift. vedtatt budsjett og potensiell budsjett - kolonne I og J i oversikten)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ev. vesentlige risiko og utfordringer eller andre forhold som bør kommuniseres. Ev. behov for videre avklaring med VIS'
+		dataType: string
+		lineageTag: 466fa447-8490-4932-b8df-00a2641455fd
+		summarizeBy: none
+		sourceColumn: Ev. vesentlige risiko og utfordringer eller andre forhold som bør kommuniseres. Ev. behov for videre avklaring med VIS
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Porteføljeprosjekter.Nr'
+		dataType: string
+		lineageTag: c4050858-d4de-4572-b318-69e9a9c8a655
+		summarizeBy: none
+		sourceColumn: Porteføljeprosjekter.Nr
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Status250225 = m
+		mode: import
+		source =
+				let
+				    Source = SharePoint.Files("https://digdir.sharepoint.com/sites/VIS-VSS", [ApiVersion = 15]),
+				    #"Porteføljetiltak - status januar 2025 05 02 25 xlsx_https://digdir sharepoint com/sites/VIS-VSS/Delte dokumenter/Porteføljestyring/" = Source{[Name="Porteføljetiltak - status januar 2025 05.02.25.xlsx",#"Folder Path"="https://digdir.sharepoint.com/sites/VIS-VSS/Delte dokumenter/Porteføljestyring/"]}[Content],
+				    #"Imported Excel Workbook" = Excel.Workbook(#"Porteføljetiltak - status januar 2025 05 02 25 xlsx_https://digdir sharepoint com/sites/VIS-VSS/Delte dokumenter/Porteføljestyring/"),
+				    Table1_Table = #"Imported Excel Workbook"{[Item="Table1",Kind="Table"]}[Data],
+				    #"Sorted Rows" = Table.Sort(Table1_Table,{{"Navn på tiltak: Legg inn navn på tiltaket som du rapporterer på. #(lf)#(lf)Sjekk om navnet på tiltaket i oversikten er beskrivende og lett for andre å forstå. Forkort gjerne langt navn. Ev. nytt navn legg...", Order.Ascending}}),
+				    #"Merged Queries" = Table.FuzzyNestedJoin(#"Sorted Rows", {"Navn på tiltak: Legg inn navn på tiltaket som du rapporterer på. #(lf)#(lf)Sjekk om navnet på tiltaket i oversikten er beskrivende og lett for andre å forstå. Forkort gjerne langt navn. Ev. nytt navn legg..."}, Porteføljeprosjekter, {"Navn på tiltak"}, "Porteføljeprosjekter", JoinKind.LeftOuter, [IgnoreCase=true, IgnoreSpace=true, NumberOfMatches=1, Threshold=0.3]),
+				    #"Expanded Porteføljeprosjekter" = Table.ExpandTableColumn(#"Merged Queries", "Porteføljeprosjekter", {"Nr"}, {"Porteføljeprosjekter.Nr"})
+				in
+				    #"Expanded Porteføljeprosjekter"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

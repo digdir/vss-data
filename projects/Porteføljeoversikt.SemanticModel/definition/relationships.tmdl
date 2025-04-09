@@ -1,0 +1,24 @@
+relationship AutoDetected_f9ace1bc-66e9-4e6a-9010-32d8c2aa72d1
+	crossFilteringBehavior: bothDirections
+	fromColumn: Porteføljeprosjekter.MSCW
+	toColumn: MSCW_sort.MSCW
+
+relationship ebb7c31a-5826-4c29-af2d-b117a4225f19
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Status250225.Starttidspunkt
+	toColumn: LocalDateTable_d000d3a8-c0be-43ac-b8c9-b70d5ba3a6ec.Date
+
+relationship 50753c1d-9342-407b-9cd4-1f956e678f60
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Status250225.Fullføringstidspunkt
+	toColumn: LocalDateTable_5410888f-edd0-48c0-a659-109219def9f2.Date
+
+relationship AutoDetected_c19f8f36-3985-4b79-8638-aa229d02844c
+	fromColumn: Prosjektkategori.Nr
+	toColumn: Porteføljeprosjekter.Nr
+
+relationship d01eb4ff-6d1e-c0b7-88fe-3ff13e4e1ea7
+	crossFilteringBehavior: bothDirections
+	fromColumn: Status250225.'Porteføljeprosjekter.Nr'
+	toColumn: Porteføljeprosjekter.Nr
+

@@ -1,0 +1,35 @@
+table MSCW_order
+	lineageTag: 8217d13a-837b-4a77-a83a-21496ab9425c
+
+	column MSCW
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: eb61c37e-6a41-4d75-ae39-a7283855dff4
+		summarizeBy: none
+		sourceColumn: MSCW
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sort
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: f000389e-42d2-4215-b64e-d01d134cba20
+		summarizeBy: sum
+		sourceColumn: Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MSCW_order = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Database("b5li4afpbdwezicwwnkeoubzse-m3nesqac3ueepkmopydvg35o3y.datawarehouse.fabric.microsoft.com", "ProjectPortfolio"),
+				    dbo_MSCW_order = Source{[Schema="dbo",Item="MSCW_order"]}[Data]
+				in
+				    dbo_MSCW_order
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

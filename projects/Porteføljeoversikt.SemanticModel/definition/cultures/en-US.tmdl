@@ -1,0 +1,3285 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "3.5.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "porteføljeprosjekter": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "porteføljeprosjekter": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.avdeling": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "Avdeling"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "avdeling": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.nr": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "Nr"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "nr": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.navn_på_tiltak": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "Navn på tiltak"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "navn på tiltak": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "Prosjekt": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.gruppe": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "Gruppe"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "gruppe": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.kontaktperson": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "Kontaktperson"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "kontaktperson": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.mscw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "MSCW"
+			        }
+			      },
+			      "State": "Generated",
+			      "Visibility": {
+			        "Value": "Hidden"
+			      },
+			      "Terms": [
+			        {
+			          "mscw": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.pulje": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "Pulje"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "pulje": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.mnd_verk": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "Mnd.verk"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "mnd.verk": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.vedtatt_tildeling_17_des__24": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "Vedtatt tildeling 17.des. 24"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "vedtatt tildeling 17.des. 24": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "vedtatt tildeling 17.de. 24": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.78
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.potensiell_finansiering_2025": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "Potensiell finansiering 2025"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "potensiell finansiering 2025": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.sum": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "Sum "
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "sum": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "summation": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        },
+			        {
+			          "aggregation": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        },
+			        {
+			          "aggregate": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.714
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.tentativ_forplitelse_2026_osv_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "Tentativ forplitelse 2026 osv."
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "tentativ forplitelse 2026 osv.": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.estimert_budsjettbehov_fra_avd_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "Estimert budsjettbehov fra avd."
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "estimert budsjettbehov fra avd.": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.ev__forklaring": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "Ev. forklaring"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ev. forklaring": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.hvilken_måned_vil_første_utbetaling_skje": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "Hvilken måned vil første utbetaling skje"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "hvilken måned vil første utbetaling skje": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.hvor_sikkert_er_estimatene": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "Hvor sikkert er estimatene"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "hvor sikkert er estimatene": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter.spørsmål_fra_veikartteamet": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Porteføljeprosjekter",
+			          "ConceptualProperty": "Spørsmål fra veikart-teamet  "
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "spørsmål fra veikart-teamet": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "spørsmål fra veikart teamet": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        }
+			      ]
+			    },
+			    "MSCW_sort": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "MSCW_sort"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "MSCW sort": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "MSCW_sort": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "mscw category": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.5
+			          }
+			        },
+			        {
+			          "mscw genus": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.5
+			          }
+			        },
+			        {
+			          "mscw species": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.5
+			          }
+			        },
+			        {
+			          "mscw variety": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.5
+			          }
+			        },
+			        {
+			          "mscw nature": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.5
+			          }
+			        },
+			        {
+			          "mscw kind": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "mscw class": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "mscw type": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "mscw ilk": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "mscw order": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        }
+			      ]
+			    },
+			    "MSCW_sort.mscw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "MSCW_sort",
+			          "ConceptualProperty": "MSCW"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "mscw": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "MSCW_sort.sort": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "MSCW_sort",
+			          "ConceptualProperty": "Sort"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "sort": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "category": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "genus": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "species": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "variety": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "nature": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "kind": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "class": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "type": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "ilk": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "order": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        }
+			      ]
+			    },
+			    "prosjektkategori": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Prosjektkategori"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "prosjektkategori": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "prosjektkategori.nr": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Prosjektkategori",
+			          "ConceptualProperty": "Nr"
+			        }
+			      },
+			      "State": "Generated",
+			      "Visibility": {
+			        "Value": "Hidden"
+			      },
+			      "Terms": [
+			        {
+			          "nr": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "prosjektkategori.gruppe": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Prosjektkategori",
+			          "ConceptualProperty": "Gruppe"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "gruppe": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "status_250225": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "status 250225": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "Status250225": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "category 250225": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "importance 250225": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "prestige 250225": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "prominence 250225": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "condition 250225": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        },
+			        {
+			          "class 250225": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        },
+			        {
+			          "grade 250225": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        },
+			        {
+			          "level 250225": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        },
+			        {
+			          "position 250225": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        },
+			        {
+			          "rank 250225": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        }
+			      ]
+			    },
+			    "status_250225.ID": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "ConceptualProperty": "ID"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ID": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "identification": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        },
+			        {
+			          "identity": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        },
+			        {
+			          "credential": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.714
+			          }
+			        }
+			      ]
+			    },
+			    "status_250225.starttidspunkt": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "ConceptualProperty": "Starttidspunkt"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "starttidspunkt": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "date": {
+			            "State": "Generated",
+			            "Weight": 0.7
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "status_250225.starttidspunkt.date_hierarchy": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "VariationSource": "Starttidspunkt",
+			          "VariationSet": "Variation",
+			          "Hierarchy": "Date Hierarchy"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "starttidspunkt date hierarchy": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "date hierarchy": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "status_250225.starttidspunkt.year": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "VariationSource": "Starttidspunkt",
+			          "VariationSet": "Variation",
+			          "Hierarchy": "Date Hierarchy",
+			          "HierarchyLevel": "Year"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "starttidspunkt year": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "year": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "starttidspunkt yr": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "yr": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "status_250225.starttidspunkt.quarter": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "VariationSource": "Starttidspunkt",
+			          "VariationSet": "Variation",
+			          "Hierarchy": "Date Hierarchy",
+			          "HierarchyLevel": "Quarter"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "starttidspunkt quarter": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "quarter": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "starttidspunkt qtr": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.833
+			          }
+			        },
+			        {
+			          "qtr": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.818
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "status_250225.starttidspunkt.month": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "VariationSource": "Starttidspunkt",
+			          "VariationSet": "Variation",
+			          "Hierarchy": "Date Hierarchy",
+			          "HierarchyLevel": "Month"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "starttidspunkt month": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "month": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "starttidspunkt mth": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "mth": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "status_250225.starttidspunkt.day": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "VariationSource": "Starttidspunkt",
+			          "VariationSet": "Variation",
+			          "Hierarchy": "Date Hierarchy",
+			          "HierarchyLevel": "Day"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "starttidspunkt day": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "day": {
+			            "State": "Generated"
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "status_250225.fullføringstidspunkt": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "ConceptualProperty": "Fullføringstidspunkt"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "fullføringstidspunkt": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "date": {
+			            "State": "Generated",
+			            "Weight": 0.7
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "status_250225.fullføringstidspunkt.date_hierarchy": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "VariationSource": "Fullføringstidspunkt",
+			          "VariationSet": "Variation",
+			          "Hierarchy": "Date Hierarchy"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "fullføringstidspunkt date hierarchy": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "date hierarchy": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "status_250225.fullføringstidspunkt.year": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "VariationSource": "Fullføringstidspunkt",
+			          "VariationSet": "Variation",
+			          "Hierarchy": "Date Hierarchy",
+			          "HierarchyLevel": "Year"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "fullføringstidspunkt year": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "year": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "fullføringstidspunkt yr": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "yr": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "status_250225.fullføringstidspunkt.quarter": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "VariationSource": "Fullføringstidspunkt",
+			          "VariationSet": "Variation",
+			          "Hierarchy": "Date Hierarchy",
+			          "HierarchyLevel": "Quarter"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "fullføringstidspunkt quarter": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "quarter": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "fullføringstidspunkt qtr": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.833
+			          }
+			        },
+			        {
+			          "qtr": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.818
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "status_250225.fullføringstidspunkt.month": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "VariationSource": "Fullføringstidspunkt",
+			          "VariationSet": "Variation",
+			          "Hierarchy": "Date Hierarchy",
+			          "HierarchyLevel": "Month"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "fullføringstidspunkt month": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "month": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "fullføringstidspunkt mth": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "mth": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "status_250225.fullføringstidspunkt.day": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "VariationSource": "Fullføringstidspunkt",
+			          "VariationSet": "Variation",
+			          "Hierarchy": "Date Hierarchy",
+			          "HierarchyLevel": "Day"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "fullføringstidspunkt day": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "day": {
+			            "State": "Generated"
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "status_250225.epostadresse": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "ConceptualProperty": "E-postadresse"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "e-postadresse": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "e postadresse": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        }
+			      ]
+			    },
+			    "status_250225.navn": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "ConceptualProperty": "Navn"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "navn": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "status_250225.tidspunkt_for_siste_endring": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "ConceptualProperty": "Tidspunkt for siste endring"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "tidspunkt for siste endring": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "status_250225.navn_på_tiltak_legg_inn_navn_på_tiltaket_som_du_rapporterer_på__sjekk_om_navnet_på_tiltaket_i_oversikten_er_beskrivende_og_lett_for_andre_å_forstå__forkort_gjerne_langt_navn__ev__nytt_navn_legg___": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "ConceptualProperty": "Navn på tiltak: Legg inn navn på tiltaket som du rapporterer på. Sjekk om navnet på tiltaket i oversikten er beskrivende og lett for andre å forstå. Forkort gjerne langt navn. Ev. nytt navn legg..."
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "navn på tiltak: legg inn navn på tiltaket som du rapporterer på. sjekk om navnet på tiltaket i oversikten er beskrivende og lett for andre å forstå. forkort gjerne langt navn. ev. nytt navn legg...": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "navn på tiltak: legg inn navn på tiltaket som du rapporterer på. sjekk om navnet på tiltaket i oversikten er beskrivende og lett for andre å forstå. forkort gjerne langt navn. ev. nytt navn legg...": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        }
+			      ]
+			    },
+			    "status_250225.kontaktperson_sjekk_om_det_står_riktig_kontaktperson_i_oversikten__ev__ny_kontaktperson_legges_i_svaret_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "ConceptualProperty": "Kontaktperson: Sjekk om det står riktig kontaktperson i oversikten. Ev. ny kontaktperson legges i svaret."
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "kontaktperson: sjekk om det står riktig kontaktperson i oversikten. ev. ny kontaktperson legges i svaret.": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "kontaktperson: sjekk om det står riktig kontaktperson i oversikten. ev. ny kontaktperson legge i svaret.": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.78
+			          }
+			        }
+			      ]
+			    },
+			    "status_250225.nåværende_fase_ref__prosjektveiviseren_for_faseinndeling": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "ConceptualProperty": "Nåværende Fase (ref. prosjektveiviseren for faseinndeling)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "nåværende fase (ref. prosjektveiviseren for faseinndeling)": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "nåværende fase": {
+			            "State": "Generated",
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "nåværende fase (ref. prosjektveiviseren for faseinndeling)": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        }
+			      ]
+			    },
+			    "status_250225.fremdrift_legg_inn_nåværende_status_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "ConceptualProperty": "Fremdrift: Legg inn nåværende status."
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "fremdrift: legg inn nåværende status.": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "status_250225.anskaffelse_av_konsulentbidstand_hvor_godt_tilgjengeligheten_av_konsulenter_er_sikret_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "ConceptualProperty": "Anskaffelse av konsulentbidstand: hvor godt tilgjengeligheten av konsulenter er sikret."
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "anskaffelse av konsulentbidstand: hvor godt tilgjengeligheten av konsulenter er sikret.": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "status_250225.ev__kommentar_til_fase_fremdriften_og_konsulentbistand": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "ConceptualProperty": "Ev. kommentar til fase, fremdriften og konsulentbistand"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ev. kommentar til fase, fremdriften og konsulentbistand": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "status_250225.ev__endring_i_budsjettbehov_ift__vedtatt_budsjett_og_potensiell_budsjett__kolonne_i_og_j_i_oversikten": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "ConceptualProperty": "Ev. endring i budsjettbehov (ift. vedtatt budsjett og potensiell budsjett - kolonne I og J i oversikten)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ev. endring i budsjettbehov (ift. vedtatt budsjett og potensiell budsjett - kolonne i og j i oversikten)": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "ev. endring i budsjettbehov": {
+			            "State": "Generated",
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "ev. endring i budsjettbehov (ift. vedtatt budsjett og potensiell budsjett kolonne i og j i oversikten)": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        }
+			      ]
+			    },
+			    "status_250225.ev__vesentlige_risiko_og_utfordringer_eller_andre_forhold_som_bør_kommuniseres__ev__behov_for_videre_avklaring_med_VIS": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Status250225",
+			          "ConceptualProperty": "Ev. vesentlige risiko og utfordringer eller andre forhold som bør kommuniseres. Ev. behov for videre avklaring med VIS"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ev. vesentlige risiko og utfordringer eller andre forhold som bør kommuniseres. ev. behov for videre avklaring med VIS": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "ev. vesentlige risiko og utfordringer eller andre forhold som bør kommunisere. ev. behov for videre avklaring med vi": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.78
+			          }
+			        },
+			        {
+			          "ev. vesentlige risiko og utfordringer eller andre forhold som bør kommuniseres. ev. behov for videre avklaring med VIS": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "ev. vesentlige risiko og utfordringer eller andre forhold som bør kommunisere. ev. behov for videre avklaring med vi": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.7566
+			          }
+			        }
+			      ]
+			    },
+			    "merge_1": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Merge1"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "merge 1": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "Merge1": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        }
+			      ]
+			    },
+			    "merge_1.avdeling": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Merge1",
+			          "ConceptualProperty": "Avdeling"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "avdeling": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "merge_1.nr": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Merge1",
+			          "ConceptualProperty": "Nr"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "nr": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "merge_1.navn_på_tiltak": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Merge1",
+			          "ConceptualProperty": "Navn på tiltak"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "navn på tiltak": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "merge_1.Status250225_navn_på_tiltak_legg_inn_navn_på_tiltaket_som_du_rapporterer_på_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Merge1",
+			          "ConceptualProperty": "Status250225.Navn på tiltak: Legg inn navn på tiltaket som du rapporterer på. "
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Status250225.navn på tiltak: legg inn navn på tiltaket som du rapporterer på.": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    }
+			  },
+			  "Relationships": {
+			    "status_250225_has_starttidspunkt": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225": {
+			          "Target": {
+			            "Entity": "status_250225"
+			          }
+			        },
+			        "status_250225.starttidspunkt": {
+			          "Target": {
+			            "Entity": "status_250225.starttidspunkt"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225"
+			            },
+			            "Object": {
+			              "Role": "status_250225.starttidspunkt"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "status_250225_have_starttidspunkts"
+			        }
+			      ]
+			    },
+			    "status_250225_has_ID": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225": {
+			          "Target": {
+			            "Entity": "status_250225"
+			          }
+			        },
+			        "status_250225.ID": {
+			          "Target": {
+			            "Entity": "status_250225.ID"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225"
+			            },
+			            "Object": {
+			              "Role": "status_250225.ID"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "status_250225_have_ID"
+			        }
+			      ]
+			    },
+			    "prosjektkategori_has_gruppe": {
+			      "Binding": {
+			        "ConceptualEntity": "Prosjektkategori"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "prosjektkategori": {
+			          "Target": {
+			            "Entity": "prosjektkategori"
+			          }
+			        },
+			        "prosjektkategori.gruppe": {
+			          "Target": {
+			            "Entity": "prosjektkategori.gruppe"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "prosjektkategori"
+			            },
+			            "Object": {
+			              "Role": "prosjektkategori.gruppe"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "prosjektkategoris_have_gruppes"
+			        }
+			      ]
+			    },
+			    "MSCW_sort_has_sort": {
+			      "Binding": {
+			        "ConceptualEntity": "MSCW_sort"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "MSCW_sort": {
+			          "Target": {
+			            "Entity": "MSCW_sort"
+			          }
+			        },
+			        "MSCW_sort.sort": {
+			          "Target": {
+			            "Entity": "MSCW_sort.sort"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "MSCW_sort"
+			            },
+			            "Object": {
+			              "Role": "MSCW_sort.sort"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "MSCW_sorts_have_sorts"
+			        }
+			      ]
+			    },
+			    "MSCW_sort_has_mscw": {
+			      "Binding": {
+			        "ConceptualEntity": "MSCW_sort"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "MSCW_sort": {
+			          "Target": {
+			            "Entity": "MSCW_sort"
+			          }
+			        },
+			        "MSCW_sort.mscw": {
+			          "Target": {
+			            "Entity": "MSCW_sort.mscw"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "MSCW_sort"
+			            },
+			            "Object": {
+			              "Role": "MSCW_sort.mscw"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "MSCW_sorts_have_mscws"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_spørsmål_fra_veikartteamet": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "porteføljeprosjekter.spørsmål_fra_veikartteamet": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter.spørsmål_fra_veikartteamet"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter.spørsmål_fra_veikartteamet"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_spørsmål_fra_veikartteamets"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_hvor_sikkert_er_estimatene": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "porteføljeprosjekter.hvor_sikkert_er_estimatene": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter.hvor_sikkert_er_estimatene"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter.hvor_sikkert_er_estimatene"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_hvor_sikkert_er_estimatenes"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_hvilken_måned_vil_første_utbetaling_skje": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "porteføljeprosjekter.hvilken_måned_vil_første_utbetaling_skje": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter.hvilken_måned_vil_første_utbetaling_skje"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter.hvilken_måned_vil_første_utbetaling_skje"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_hvilken_måned_vil_første_utbetaling_skjes"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_ev__forklaring": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "porteføljeprosjekter.ev__forklaring": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter.ev__forklaring"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter.ev__forklaring"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_ev__forklarings"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_estimert_budsjettbehov_fra_avd_": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "porteføljeprosjekter.estimert_budsjettbehov_fra_avd_": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter.estimert_budsjettbehov_fra_avd_"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter.estimert_budsjettbehov_fra_avd_"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_estimert_budsjettbehov_fra_avd_"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_tentativ_forplitelse_2026_osv_": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "porteføljeprosjekter.tentativ_forplitelse_2026_osv_": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter.tentativ_forplitelse_2026_osv_"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter.tentativ_forplitelse_2026_osv_"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_tentativ_forplitelse_2026_osv_"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_sum": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "porteføljeprosjekter.sum": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter.sum"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter.sum"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_sums"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_potensiell_finansiering_2025": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "porteføljeprosjekter.potensiell_finansiering_2025": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter.potensiell_finansiering_2025"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter.potensiell_finansiering_2025"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_potensiell_finansiering_2025"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_vedtatt_tildeling_17_des__24": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "porteføljeprosjekter.vedtatt_tildeling_17_des__24": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter.vedtatt_tildeling_17_des__24"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter.vedtatt_tildeling_17_des__24"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_vedtatt_tildeling_17_des__24"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_mnd_verk": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "porteføljeprosjekter.mnd_verk": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter.mnd_verk"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter.mnd_verk"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_mnd_verks"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_pulje": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "porteføljeprosjekter.pulje": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter.pulje"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter.pulje"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_puljes"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_kontaktperson": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "porteføljeprosjekter.kontaktperson": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter.kontaktperson"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter.kontaktperson"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_kontaktpersons"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_gruppe": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "porteføljeprosjekter.gruppe": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter.gruppe"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter.gruppe"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_gruppes"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_navn_på_tiltak": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "porteføljeprosjekter.navn_på_tiltak": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter.navn_på_tiltak"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter.navn_på_tiltak"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_navn_på_tiltaks"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_nr": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "porteføljeprosjekter.nr": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter.nr"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter.nr"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_nr"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_avdeling": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "porteføljeprosjekter.avdeling": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter.avdeling"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter.avdeling"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_avdelings"
+			        }
+			      ]
+			    },
+			    "status_250225_has_fullføringstidspunkt": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225": {
+			          "Target": {
+			            "Entity": "status_250225"
+			          }
+			        },
+			        "status_250225.fullføringstidspunkt": {
+			          "Target": {
+			            "Entity": "status_250225.fullføringstidspunkt"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225"
+			            },
+			            "Object": {
+			              "Role": "status_250225.fullføringstidspunkt"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "status_250225_have_fullføringstidspunkts"
+			        }
+			      ]
+			    },
+			    "status_250225_has_epostadresse": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225": {
+			          "Target": {
+			            "Entity": "status_250225"
+			          }
+			        },
+			        "status_250225.epostadresse": {
+			          "Target": {
+			            "Entity": "status_250225.epostadresse"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225"
+			            },
+			            "Object": {
+			              "Role": "status_250225.epostadresse"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "status_250225_have_epostadresses"
+			        }
+			      ]
+			    },
+			    "status_250225_has_navn": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225": {
+			          "Target": {
+			            "Entity": "status_250225"
+			          }
+			        },
+			        "status_250225.navn": {
+			          "Target": {
+			            "Entity": "status_250225.navn"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225"
+			            },
+			            "Object": {
+			              "Role": "status_250225.navn"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "status_250225_have_navns"
+			        }
+			      ]
+			    },
+			    "status_250225_has_tidspunkt_for_siste_endring": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225": {
+			          "Target": {
+			            "Entity": "status_250225"
+			          }
+			        },
+			        "status_250225.tidspunkt_for_siste_endring": {
+			          "Target": {
+			            "Entity": "status_250225.tidspunkt_for_siste_endring"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225"
+			            },
+			            "Object": {
+			              "Role": "status_250225.tidspunkt_for_siste_endring"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "status_250225_have_tidspunkt_for_siste_endring"
+			        }
+			      ]
+			    },
+			    "status_250225_has_navn_på_tiltak_legg_inn_navn_på_tiltaket_som_du_rapporterer_på__sjekk_om_navnet_på_tiltaket_i_oversikten_er_beskrivende_og_lett_for_andre_å_forstå__forkort_gjerne_langt_navn__ev__nytt_navn_legg___": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225": {
+			          "Target": {
+			            "Entity": "status_250225"
+			          }
+			        },
+			        "status_250225.navn_på_tiltak_legg_inn_navn_på_tiltaket_som_du_rapporterer_på__sjekk_om_navnet_på_tiltaket_i_oversikten_er_beskrivende_og_lett_for_andre_å_forstå__forkort_gjerne_langt_navn__ev__nytt_navn_legg___": {
+			          "Target": {
+			            "Entity": "status_250225.navn_på_tiltak_legg_inn_navn_på_tiltaket_som_du_rapporterer_på__sjekk_om_navnet_på_tiltaket_i_oversikten_er_beskrivende_og_lett_for_andre_å_forstå__forkort_gjerne_langt_navn__ev__nytt_navn_legg___"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225"
+			            },
+			            "Object": {
+			              "Role": "status_250225.navn_på_tiltak_legg_inn_navn_på_tiltaket_som_du_rapporterer_på__sjekk_om_navnet_på_tiltaket_i_oversikten_er_beskrivende_og_lett_for_andre_å_forstå__forkort_gjerne_langt_navn__ev__nytt_navn_legg___"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "status_250225_have_navn_på_tiltak_legg_inn_navn_på_tiltaket_som_du_rapporterer_på__sjekk_om_navnet_på_tiltaket_i_oversikten_er_beskrivende_og_lett_for_andre_å_forstå__forkort_gjerne_langt_navn__ev__nytt_navn_legg___"
+			        }
+			      ]
+			    },
+			    "status_250225_has_kontaktperson_sjekk_om_det_står_riktig_kontaktperson_i_oversikten__ev__ny_kontaktperson_legges_i_svaret_": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225": {
+			          "Target": {
+			            "Entity": "status_250225"
+			          }
+			        },
+			        "status_250225.kontaktperson_sjekk_om_det_står_riktig_kontaktperson_i_oversikten__ev__ny_kontaktperson_legges_i_svaret_": {
+			          "Target": {
+			            "Entity": "status_250225.kontaktperson_sjekk_om_det_står_riktig_kontaktperson_i_oversikten__ev__ny_kontaktperson_legges_i_svaret_"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225"
+			            },
+			            "Object": {
+			              "Role": "status_250225.kontaktperson_sjekk_om_det_står_riktig_kontaktperson_i_oversikten__ev__ny_kontaktperson_legges_i_svaret_"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "status_250225_have_kontaktperson_sjekk_om_det_står_riktig_kontaktperson_i_oversikten__ev__ny_kontaktperson_legges_i_svaret_"
+			        }
+			      ]
+			    },
+			    "status_250225_has_nåværende_fase_ref__prosjektveiviseren_for_faseinndeling": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225": {
+			          "Target": {
+			            "Entity": "status_250225"
+			          }
+			        },
+			        "status_250225.nåværende_fase_ref__prosjektveiviseren_for_faseinndeling": {
+			          "Target": {
+			            "Entity": "status_250225.nåværende_fase_ref__prosjektveiviseren_for_faseinndeling"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225"
+			            },
+			            "Object": {
+			              "Role": "status_250225.nåværende_fase_ref__prosjektveiviseren_for_faseinndeling"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "status_250225_have_nåværende_fase_ref__prosjektveiviseren_for_faseinndeling"
+			        }
+			      ]
+			    },
+			    "status_250225_has_fremdrift_legg_inn_nåværende_status_": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225": {
+			          "Target": {
+			            "Entity": "status_250225"
+			          }
+			        },
+			        "status_250225.fremdrift_legg_inn_nåværende_status_": {
+			          "Target": {
+			            "Entity": "status_250225.fremdrift_legg_inn_nåværende_status_"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225"
+			            },
+			            "Object": {
+			              "Role": "status_250225.fremdrift_legg_inn_nåværende_status_"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "status_250225_have_fremdrift_legg_inn_nåværende_status_"
+			        }
+			      ]
+			    },
+			    "status_250225_has_anskaffelse_av_konsulentbidstand_hvor_godt_tilgjengeligheten_av_konsulenter_er_sikret_": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225": {
+			          "Target": {
+			            "Entity": "status_250225"
+			          }
+			        },
+			        "status_250225.anskaffelse_av_konsulentbidstand_hvor_godt_tilgjengeligheten_av_konsulenter_er_sikret_": {
+			          "Target": {
+			            "Entity": "status_250225.anskaffelse_av_konsulentbidstand_hvor_godt_tilgjengeligheten_av_konsulenter_er_sikret_"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225"
+			            },
+			            "Object": {
+			              "Role": "status_250225.anskaffelse_av_konsulentbidstand_hvor_godt_tilgjengeligheten_av_konsulenter_er_sikret_"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "status_250225_have_anskaffelse_av_konsulentbidstand_hvor_godt_tilgjengeligheten_av_konsulenter_er_sikret_"
+			        }
+			      ]
+			    },
+			    "status_250225_has_ev__kommentar_til_fase_fremdriften_og_konsulentbistand": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225": {
+			          "Target": {
+			            "Entity": "status_250225"
+			          }
+			        },
+			        "status_250225.ev__kommentar_til_fase_fremdriften_og_konsulentbistand": {
+			          "Target": {
+			            "Entity": "status_250225.ev__kommentar_til_fase_fremdriften_og_konsulentbistand"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225"
+			            },
+			            "Object": {
+			              "Role": "status_250225.ev__kommentar_til_fase_fremdriften_og_konsulentbistand"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "status_250225_have_ev__kommentar_til_fase_fremdriften_og_konsulentbistand"
+			        }
+			      ]
+			    },
+			    "status_250225_has_ev__endring_i_budsjettbehov_ift__vedtatt_budsjett_og_potensiell_budsjett__kolonne_i_og_j_i_oversikten": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225": {
+			          "Target": {
+			            "Entity": "status_250225"
+			          }
+			        },
+			        "status_250225.ev__endring_i_budsjettbehov_ift__vedtatt_budsjett_og_potensiell_budsjett__kolonne_i_og_j_i_oversikten": {
+			          "Target": {
+			            "Entity": "status_250225.ev__endring_i_budsjettbehov_ift__vedtatt_budsjett_og_potensiell_budsjett__kolonne_i_og_j_i_oversikten"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225"
+			            },
+			            "Object": {
+			              "Role": "status_250225.ev__endring_i_budsjettbehov_ift__vedtatt_budsjett_og_potensiell_budsjett__kolonne_i_og_j_i_oversikten"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "status_250225_have_ev__endring_i_budsjettbehov_ift__vedtatt_budsjett_og_potensiell_budsjett__kolonne_i_og_j_i_oversikten"
+			        }
+			      ]
+			    },
+			    "status_250225_has_ev__vesentlige_risiko_og_utfordringer_eller_andre_forhold_som_bør_kommuniseres__ev__behov_for_videre_avklaring_med_VIS": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225": {
+			          "Target": {
+			            "Entity": "status_250225"
+			          }
+			        },
+			        "status_250225.ev__vesentlige_risiko_og_utfordringer_eller_andre_forhold_som_bør_kommuniseres__ev__behov_for_videre_avklaring_med_VIS": {
+			          "Target": {
+			            "Entity": "status_250225.ev__vesentlige_risiko_og_utfordringer_eller_andre_forhold_som_bør_kommuniseres__ev__behov_for_videre_avklaring_med_VIS"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225"
+			            },
+			            "Object": {
+			              "Role": "status_250225.ev__vesentlige_risiko_og_utfordringer_eller_andre_forhold_som_bør_kommuniseres__ev__behov_for_videre_avklaring_med_VIS"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "status_250225_have_ev__vesentlige_risiko_og_utfordringer_eller_andre_forhold_som_bør_kommuniseres__ev__behov_for_videre_avklaring_med_VIS"
+			        }
+			      ]
+			    },
+			    "merge_1_has_avdeling": {
+			      "Binding": {
+			        "ConceptualEntity": "Merge1"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "merge_1": {
+			          "Target": {
+			            "Entity": "merge_1"
+			          }
+			        },
+			        "merge_1.avdeling": {
+			          "Target": {
+			            "Entity": "merge_1.avdeling"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "merge_1"
+			            },
+			            "Object": {
+			              "Role": "merge_1.avdeling"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "merge_1_have_avdelings"
+			        }
+			      ]
+			    },
+			    "merge_1_has_nr": {
+			      "Binding": {
+			        "ConceptualEntity": "Merge1"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "merge_1": {
+			          "Target": {
+			            "Entity": "merge_1"
+			          }
+			        },
+			        "merge_1.nr": {
+			          "Target": {
+			            "Entity": "merge_1.nr"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "merge_1"
+			            },
+			            "Object": {
+			              "Role": "merge_1.nr"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "merge_1_have_nr"
+			        }
+			      ]
+			    },
+			    "merge_1_has_navn_på_tiltak": {
+			      "Binding": {
+			        "ConceptualEntity": "Merge1"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "merge_1": {
+			          "Target": {
+			            "Entity": "merge_1"
+			          }
+			        },
+			        "merge_1.navn_på_tiltak": {
+			          "Target": {
+			            "Entity": "merge_1.navn_på_tiltak"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "merge_1"
+			            },
+			            "Object": {
+			              "Role": "merge_1.navn_på_tiltak"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "merge_1_have_navn_på_tiltaks"
+			        }
+			      ]
+			    },
+			    "merge_1_has_Status250225_navn_på_tiltak_legg_inn_navn_på_tiltaket_som_du_rapporterer_på_": {
+			      "Binding": {
+			        "ConceptualEntity": "Merge1"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "merge_1": {
+			          "Target": {
+			            "Entity": "merge_1"
+			          }
+			        },
+			        "merge_1.Status250225_navn_på_tiltak_legg_inn_navn_på_tiltaket_som_du_rapporterer_på_": {
+			          "Target": {
+			            "Entity": "merge_1.Status250225_navn_på_tiltak_legg_inn_navn_på_tiltaket_som_du_rapporterer_på_"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "merge_1"
+			            },
+			            "Object": {
+			              "Role": "merge_1.Status250225_navn_på_tiltak_legg_inn_navn_på_tiltaket_som_du_rapporterer_på_"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "merge_1_have_Status250225_navn_på_tiltak_legg_inn_navn_på_tiltaket_som_du_rapporterer_på_"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_MSCW_sort": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "MSCW_sort": {
+			          "Target": {
+			            "Entity": "MSCW_sort"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "MSCW_sort"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_MSCW_sorts"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "MSCW_sort"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "MSCW_sorts_have_porteføljeprosjekters"
+			        }
+			      ]
+			    },
+			    "porteføljeprosjekter_has_merge_1": {
+			      "Binding": {
+			        "ConceptualEntity": "Porteføljeprosjekter"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        },
+			        "merge_1": {
+			          "Target": {
+			            "Entity": "merge_1"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "merge_1"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_merge_1"
+			        }
+			      ]
+			    },
+			    "prosjektkategori_has_porteføljeprosjekter": {
+			      "Binding": {
+			        "ConceptualEntity": "Prosjektkategori"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "prosjektkategori": {
+			          "Target": {
+			            "Entity": "prosjektkategori"
+			          }
+			        },
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          },
+			          "Nouns": [
+			            {
+			              "nr": {
+			                "State": "Generated"
+			              }
+			            }
+			          ]
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "prosjektkategori"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "prosjektkategoris_have_porteføljeprosjekters"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "porteføljeprosjekter"
+			            },
+			            "Object": {
+			              "Role": "prosjektkategori"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "porteføljeprosjekters_have_prosjektkategoris"
+			        }
+			      ]
+			    },
+			    "merge_1_has_porteføljeprosjekter": {
+			      "Binding": {
+			        "ConceptualEntity": "Merge1"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "merge_1": {
+			          "Target": {
+			            "Entity": "merge_1"
+			          }
+			        },
+			        "porteføljeprosjekter": {
+			          "Target": {
+			            "Entity": "porteføljeprosjekter"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "merge_1"
+			            },
+			            "Object": {
+			              "Role": "porteføljeprosjekter"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "merge_1_have_porteføljeprosjekters"
+			        }
+			      ]
+			    },
+			    "status_250225_starttidspunkt_has_date_hierarchy": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225.starttidspunkt": {
+			          "Target": {
+			            "Entity": "status_250225.starttidspunkt"
+			          }
+			        },
+			        "status_250225.starttidspunkt.date_hierarchy": {
+			          "Target": {
+			            "Entity": "status_250225.starttidspunkt.date_hierarchy"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225.starttidspunkt"
+			            },
+			            "Object": {
+			              "Role": "status_250225.starttidspunkt.date_hierarchy"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "starttidspunkts_have_starttidspunkt_date_hierarchies"
+			        }
+			      ]
+			    },
+			    "status_250225_starttidspunkt_date_hierarchy_has_status_250225_starttidspunkt_year": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225.starttidspunkt.date_hierarchy": {
+			          "Target": {
+			            "Entity": "status_250225.starttidspunkt.date_hierarchy"
+			          }
+			        },
+			        "status_250225.starttidspunkt.year": {
+			          "Target": {
+			            "Entity": "status_250225.starttidspunkt.year"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225.starttidspunkt.date_hierarchy"
+			            },
+			            "Object": {
+			              "Role": "status_250225.starttidspunkt.year"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "starttidspunkt_date_hierarchies_have_starttidspunkt_years"
+			        }
+			      ]
+			    },
+			    "status_250225_starttidspunkt_date_hierarchy_has_status_250225_starttidspunkt_quarter": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225.starttidspunkt.date_hierarchy": {
+			          "Target": {
+			            "Entity": "status_250225.starttidspunkt.date_hierarchy"
+			          }
+			        },
+			        "status_250225.starttidspunkt.quarter": {
+			          "Target": {
+			            "Entity": "status_250225.starttidspunkt.quarter"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225.starttidspunkt.date_hierarchy"
+			            },
+			            "Object": {
+			              "Role": "status_250225.starttidspunkt.quarter"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "starttidspunkt_date_hierarchies_have_starttidspunkt_quarters"
+			        }
+			      ]
+			    },
+			    "status_250225_starttidspunkt_date_hierarchy_has_status_250225_starttidspunkt_month": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225.starttidspunkt.date_hierarchy": {
+			          "Target": {
+			            "Entity": "status_250225.starttidspunkt.date_hierarchy"
+			          }
+			        },
+			        "status_250225.starttidspunkt.month": {
+			          "Target": {
+			            "Entity": "status_250225.starttidspunkt.month"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225.starttidspunkt.date_hierarchy"
+			            },
+			            "Object": {
+			              "Role": "status_250225.starttidspunkt.month"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "starttidspunkt_date_hierarchies_have_starttidspunkt_months"
+			        }
+			      ]
+			    },
+			    "status_250225_starttidspunkt_date_hierarchy_has_status_250225_starttidspunkt_day": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225.starttidspunkt.date_hierarchy": {
+			          "Target": {
+			            "Entity": "status_250225.starttidspunkt.date_hierarchy"
+			          }
+			        },
+			        "status_250225.starttidspunkt.day": {
+			          "Target": {
+			            "Entity": "status_250225.starttidspunkt.day"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225.starttidspunkt.date_hierarchy"
+			            },
+			            "Object": {
+			              "Role": "status_250225.starttidspunkt.day"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "starttidspunkt_date_hierarchies_have_starttidspunkt_days"
+			        }
+			      ]
+			    },
+			    "status_250225_fullføringstidspunkt_has_date_hierarchy": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225.fullføringstidspunkt": {
+			          "Target": {
+			            "Entity": "status_250225.fullføringstidspunkt"
+			          }
+			        },
+			        "status_250225.fullføringstidspunkt.date_hierarchy": {
+			          "Target": {
+			            "Entity": "status_250225.fullføringstidspunkt.date_hierarchy"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225.fullføringstidspunkt"
+			            },
+			            "Object": {
+			              "Role": "status_250225.fullføringstidspunkt.date_hierarchy"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fullføringstidspunkts_have_fullføringstidspunkt_date_hierarchies"
+			        }
+			      ]
+			    },
+			    "status_250225_fullføringstidspunkt_date_hierarchy_has_status_250225_fullføringstidspunkt_year": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225.fullføringstidspunkt.date_hierarchy": {
+			          "Target": {
+			            "Entity": "status_250225.fullføringstidspunkt.date_hierarchy"
+			          }
+			        },
+			        "status_250225.fullføringstidspunkt.year": {
+			          "Target": {
+			            "Entity": "status_250225.fullføringstidspunkt.year"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225.fullføringstidspunkt.date_hierarchy"
+			            },
+			            "Object": {
+			              "Role": "status_250225.fullføringstidspunkt.year"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fullføringstidspunkt_date_hierarchies_have_fullføringstidspunkt_years"
+			        }
+			      ]
+			    },
+			    "status_250225_fullføringstidspunkt_date_hierarchy_has_status_250225_fullføringstidspunkt_quarter": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225.fullføringstidspunkt.date_hierarchy": {
+			          "Target": {
+			            "Entity": "status_250225.fullføringstidspunkt.date_hierarchy"
+			          }
+			        },
+			        "status_250225.fullføringstidspunkt.quarter": {
+			          "Target": {
+			            "Entity": "status_250225.fullføringstidspunkt.quarter"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225.fullføringstidspunkt.date_hierarchy"
+			            },
+			            "Object": {
+			              "Role": "status_250225.fullføringstidspunkt.quarter"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fullføringstidspunkt_date_hierarchies_have_fullføringstidspunkt_quarters"
+			        }
+			      ]
+			    },
+			    "status_250225_fullføringstidspunkt_date_hierarchy_has_status_250225_fullføringstidspunkt_month": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225.fullføringstidspunkt.date_hierarchy": {
+			          "Target": {
+			            "Entity": "status_250225.fullføringstidspunkt.date_hierarchy"
+			          }
+			        },
+			        "status_250225.fullføringstidspunkt.month": {
+			          "Target": {
+			            "Entity": "status_250225.fullføringstidspunkt.month"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225.fullføringstidspunkt.date_hierarchy"
+			            },
+			            "Object": {
+			              "Role": "status_250225.fullføringstidspunkt.month"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fullføringstidspunkt_date_hierarchies_have_fullføringstidspunkt_months"
+			        }
+			      ]
+			    },
+			    "status_250225_fullføringstidspunkt_date_hierarchy_has_status_250225_fullføringstidspunkt_day": {
+			      "Binding": {
+			        "ConceptualEntity": "Status250225"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "status_250225.fullføringstidspunkt.date_hierarchy": {
+			          "Target": {
+			            "Entity": "status_250225.fullføringstidspunkt.date_hierarchy"
+			          }
+			        },
+			        "status_250225.fullføringstidspunkt.day": {
+			          "Target": {
+			            "Entity": "status_250225.fullføringstidspunkt.day"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "status_250225.fullføringstidspunkt.date_hierarchy"
+			            },
+			            "Object": {
+			              "Role": "status_250225.fullføringstidspunkt.day"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fullføringstidspunkt_date_hierarchies_have_fullføringstidspunkt_days"
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

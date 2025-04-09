@@ -1,0 +1,166 @@
+table Porteføljeprosjekter
+	lineageTag: 387f064a-bd76-4ac8-a76e-e66e7f2c1df9
+
+	column Avdeling
+		dataType: string
+		lineageTag: 97fb0cbf-0ce9-42f8-9c05-c3e1f5460194
+		summarizeBy: none
+		sourceColumn: Avdeling
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nr
+		dataType: string
+		lineageTag: 9ecbeb32-469c-4e83-8f8c-d70e324b46f5
+		summarizeBy: none
+		sourceColumn: Nr
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Navn på tiltak'
+		dataType: string
+		lineageTag: 7d2491e6-4f47-4eb2-9cd7-537e5c297dfa
+		summarizeBy: none
+		sourceColumn: Navn på tiltak
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gruppe
+		dataType: string
+		lineageTag: 50807eb3-f49d-429f-aa68-15ace42867c9
+		summarizeBy: none
+		sourceColumn: Gruppe
+
+		annotation SummarizationSetBy = Automatic
+
+	column Kontaktperson
+		dataType: string
+		lineageTag: 225ee6a1-6bd2-4e3f-8c1e-67f10e57bfef
+		summarizeBy: none
+		sourceColumn: Kontaktperson
+
+		annotation SummarizationSetBy = Automatic
+
+	column MSCW
+		dataType: string
+		lineageTag: 6f034a25-0c8b-44db-a59f-297c7d917689
+		summarizeBy: none
+		sourceColumn: MSCW
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pulje
+		dataType: string
+		lineageTag: c85431fa-d2cf-4f24-a1b9-a9550fc2fa21
+		summarizeBy: none
+		sourceColumn: Pulje
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mnd.verk'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9fb57637-5885-4426-bc8d-0fd9858d8114
+		summarizeBy: sum
+		sourceColumn: Mnd.verk
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Vedtatt tildeling 17.des. 24'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 9583f893-ae0b-443f-a730-febdca538e8b
+		summarizeBy: sum
+		sourceColumn: Vedtatt tildeling 17.des. 24
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Potensiell finansiering 2025'
+		dataType: int64
+		formatString: #,0
+		lineageTag: c980a47b-6465-4277-8910-804eaa7fb267
+		summarizeBy: sum
+		sourceColumn: Potensiell finansiering 2025
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sum '
+		dataType: int64
+		formatString: #,0
+		lineageTag: 179bd87c-ba27-47b4-b0f6-eb66bf1e5da4
+		summarizeBy: sum
+		sourceColumn: "Sum "
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tentativ forplitelse 2026 osv.'
+		dataType: int64
+		formatString: 0
+		lineageTag: 2650db21-183d-48d1-8384-f1e6ad82f9ca
+		summarizeBy: sum
+		sourceColumn: Tentativ forplitelse 2026 osv.
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Estimert budsjettbehov fra avd.'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 51536d67-0fa9-4c58-b0c4-78d852e2021e
+		summarizeBy: sum
+		sourceColumn: Estimert budsjettbehov fra avd.
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ev. forklaring'
+		dataType: string
+		lineageTag: 17d71cf5-63bb-4d26-a194-62576426a636
+		summarizeBy: none
+		sourceColumn: Ev. forklaring
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hvilken måned vil første utbetaling skje'
+		dataType: string
+		lineageTag: 2d301f0a-1b6c-459f-9951-8e07c0af61a3
+		summarizeBy: none
+		sourceColumn: Hvilken måned vil første utbetaling skje
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hvor sikkert er estimatene'
+		dataType: string
+		lineageTag: e1daad49-0588-40f8-87e6-805322a3e8bb
+		summarizeBy: none
+		sourceColumn: Hvor sikkert er estimatene
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Spørsmål fra veikart-teamet  '
+		dataType: string
+		lineageTag: bf991284-3e16-4463-ad60-b41cdf09a987
+		summarizeBy: none
+		sourceColumn: "Spørsmål fra veikart-teamet  "
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Porteføljeprosjekter = m
+		mode: import
+		source =
+				let
+				    Source = SharePoint.Files("https://digdir.sharepoint.com/sites/Portefljeoversikt/", [ApiVersion = 15]),
+				    #"Porteføljeoversikt xlsx_https://digdir sharepoint com/sites/Portefljeoversikt/Delte dokumenter/General/" = Source{[Name="Porteføljeoversikt.xlsx",#"Folder Path"="https://digdir.sharepoint.com/sites/Portefljeoversikt/Delte dokumenter/General/"]}[Content],
+				    #"Imported Excel Workbook" = Excel.Workbook(#"Porteføljeoversikt xlsx_https://digdir sharepoint com/sites/Portefljeoversikt/Delte dokumenter/General/"),
+				    #"Oversikt pr 17 12 24_Sheet" = #"Imported Excel Workbook"{[Item="Oversikt pr 17.12.24",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Oversikt pr 17 12 24_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Avdeling", type text}, {"Nr", type text}, {"Navn på tiltak", type text}, {"Gruppe", type text}, {"Kontaktperson", type text}, {"MSCW", type text}, {"Pulje", type any}, {"Mnd.verk", Int64.Type}, {"Vedtatt tildeling 17.des. 24", Int64.Type}, {"Potensiell finansiering 2025", Int64.Type}, {"Sum ", Int64.Type}, {"Tentativ forplitelse 2026 osv.", Int64.Type}, {"Estimert budsjettbehov fra avd.", Int64.Type}, {"Ev. forklaring", type text}, {"Hvilken måned vil første utbetaling skje", type any}, {"Hvor sikkert er estimatene", type any}, {"Spørsmål fra veikart-teamet  ", type any}, {"Column18", type text}, {"Column19", type any}, {"Column20", type any}, {"Column21", type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each ([Navn på tiltak] <> null)),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"Column19", "Column20", "Column21", "Column18"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

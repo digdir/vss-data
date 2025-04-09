@@ -1,0 +1,52 @@
+table Merge1
+	lineageTag: 0860bbe9-6e6c-4372-8d22-819a63941764
+
+	column Avdeling
+		dataType: string
+		lineageTag: 315d202d-8c57-4453-a30b-de418055fe28
+		summarizeBy: none
+		sourceColumn: Avdeling
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nr
+		dataType: string
+		lineageTag: 3c55980d-309b-4a87-974d-50218b532387
+		summarizeBy: none
+		sourceColumn: Nr
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Navn på tiltak'
+		dataType: string
+		lineageTag: 73c789fe-8d47-42bc-9621-596c8e794868
+		summarizeBy: none
+		sourceColumn: Navn på tiltak
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Status250225.Navn på tiltak: Legg inn navn på tiltaket som du rapporterer på. '
+		dataType: string
+		lineageTag: a839ce1a-8b8d-4c24-a986-be5cb2f92ee1
+		summarizeBy: none
+		sourceColumn: "Status250225.Navn på tiltak: Legg inn navn på tiltaket som du rapporterer på. "
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Merge1 = m
+		mode: import
+		source =
+				let
+				    Source = Table.FuzzyNestedJoin(Porteføljeprosjekter, {"Navn på tiltak", "Kontaktperson"}, Status250225, {"Navn på tiltak: Legg inn navn på tiltaket som du rapporterer på. #(lf)#(lf)Sjekk om navnet på tiltaket i oversikten er beskrivende og lett for andre å forstå. Forkort gjerne langt navn. Ev. nytt navn legg...", "Navn"}, "Status250225", JoinKind.LeftOuter, [IgnoreCase=true, IgnoreSpace=true, NumberOfMatches=1, Threshold=0.33]),
+				    #"Expanded Status250225" = Table.ExpandTableColumn(Source, "Status250225", {"Navn på tiltak: Legg inn navn på tiltaket som du rapporterer på. #(lf)#(lf)Sjekk om navnet på tiltaket i oversikten er beskrivende og lett for andre å forstå. Forkort gjerne langt navn. Ev. nytt navn legg..."}, {"Status250225.Navn på tiltak: Legg inn navn på tiltaket som du rapporterer på. #(lf)#(lf)"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Expanded Status250225",{"Gruppe", "Kontaktperson", "MSCW", "Pulje", "Mnd.verk", "Vedtatt tildeling 17.des. 24", "Potensiell finansiering 2025", "Sum ", "Tentativ forplitelse 2026 osv.", "Estimert budsjettbehov fra avd.", "Ev. forklaring", "Hvilken måned vil første utbetaling skje", "Hvor sikkert er estimatene", "Spørsmål fra veikart-teamet  "}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Columns", each ([#"Status250225.Navn på tiltak: Legg inn navn på tiltaket som du rapporterer på. #(lf)#(lf)"] <> null)),
+				    #"Sorted Rows" = Table.Sort(#"Filtered Rows",{{"Status250225.Navn på tiltak: Legg inn navn på tiltaket som du rapporterer på. #(lf)#(lf)", Order.Ascending}}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Sorted Rows", each ([Nr] <> "STL2B"))
+				in
+				    #"Filtered Rows1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
