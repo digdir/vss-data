@@ -26,7 +26,7 @@
 
 # CELL ********************
 
-from typing import Dict, Union, Optional
+from typing import Dict, Union, Optional, List
 import requests
 import logging
 
@@ -134,15 +134,19 @@ class AltinnInstanceClient:
         )
     
     def get_instance(self, instanceOwnerPartyId: str, instanceGuid: str, header: Dict[str, str]) -> Optional[requests.Response]:
-        url = f"{self.base_app_url}/{instanceOwnerPartyId}/{instanceGuid}"
+        instance_id = instanceGuid.split("/")[1]
+        print(instanceOwnerPartyId)
+        print(instance_id)
+        url = f"{self.basePathApp}/{instanceOwnerPartyId}/{instance_id}"
+        print(url)
         return make_api_call(method="GET", url=url, headers=header)
     
     def get_active_instance(self, instanceOwnerPartyId: str, header: Dict[str, str]) -> Optional[requests.Response]:
-        url = f"{self.base_app_url}/{instanceOwnerPartyId}/active"
+        url = f"{self.basePathApp}/{instanceOwnerPartyId}/active"
         return make_api_call(method="GET", url=url, headers=header)
     
     def post_new_instance(self, instanceOwnerPartyId: str, header: Dict[str, str], data: Dict[str, str]) -> Optional[requests.Response]:
-        url = f"{self.base_app_url}/{instanceOwnerPartyId}/active"
+        url = f"{self.basePathApp}/create"
         return make_api_call(method="POST", url=url, headers=header, data=data)
     
     def get_stored_instances_ids(self, header: Dict[str, str]):
@@ -153,6 +157,18 @@ class AltinnInstanceClient:
         }
         data_storage_instances = make_api_call(method="GET", url=url, headers=header, params=params)
         return extract_instances_ids(data_storage_instances.json())
+
+    def complete_instance(self, instanceOwnerPartyId: str, instanceGuid: str, header: Dict[str, str]) -> Optional[requests.Response]:
+        instance_id = instanceGuid.split("/")[1]
+        url = f"{self.basePathApp}/{instanceOwnerPartyId}/{instance_id}/complete"
+        return make_api_call(method="POST", url=url, headers=header)
+    
+    
+    def delete_instance(self, instanceOwnerPartyId: str, instanceGuid: str, header: Dict[str, str], hard_delete: bool = False) -> Optional[requests.Response]:
+        instance_id = instanceGuid.split("/")[1]
+        url = f"{self.basePathApp}/{instanceOwnerPartyId}/{instance_id}"
+        return make_api_call(method="DELETE", url=url, headers=header, params={"hard": str(hard_delete).lower()})
+
 
 
 # METADATA ********************
