@@ -454,3 +454,19 @@ prefill_structure
 # META   "language": "python",
 # META   "language_group": "jupyter_python"
 # META }
+
+# CELL ********************
+
+def main():
+    print("This works")
+    return None
+
+if __name__ == "__main__":
+    main()
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "jupyter_python"
+# META }

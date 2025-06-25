@@ -198,3 +198,19 @@ instance_post = requests.post("https://digdir.apps.tt02.altinn.no/digdir/regvil-
 # META   "language": "python",
 # META   "language_group": "synapse_pyspark"
 # META }
+
+# CELL ********************
+
+def main():
+    print("This works")
+    return None
+
+if __name__ == "__main__":
+    main()
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
