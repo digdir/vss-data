@@ -25,6 +25,28 @@
 # META }
 
 # CELL ********************
+
+#%run exchange_token_funcs 
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+#%run instance_client
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
 from typing import Any, Dict
 from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential 
@@ -39,20 +61,20 @@ def load_in_json(path_to_json_file):
     with open(path_to_json_file, 'r', encoding='utf-8') as file:
         return json.load(file)
 
-def import_fabric_notebook(notebook_path, module_name):
-    """Import a Fabric notebook's Python content"""
-    py_file_path = os.path.join(notebook_path, 'notebook-content.py')
-    
-    spec = importlib.util.spec_from_file_location(module_name, py_file_path)
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[module_name] = module
-    spec.loader.exec_module(module)
-    return module
+#def import_fabric_notebook(notebook_path, module_name):
+#    """Import a Fabric notebook's Python content"""
+#    py_file_path = os.path.join(notebook_path, 'notebook-content.py')
+#    
+#    spec = importlib.util.spec_from_file_location(module_name, py_file_path)
+#    module = importlib.util.module_from_spec(spec)
+#    sys.modules[module_name] = module
+#    spec.loader.exec_module(module)
+#    return module
 
 # Import your notebooks
-exchange_token_funcs = import_fabric_notebook('auth/exchange_token_funcs.Notebook', 'exchange_token_funcs')
-instance_client = import_fabric_notebook('clients/instance_client.Notebook', 'instance_client')
-instance_logging = import_fabric_notebook('clients/instance_logging.Notebook', 'instance_logging')
+#exchange_token_funcs = import_fabric_notebook('auth/exchange_token_funcs.Notebook', 'exchange_token_funcs')
+#instance_client = import_fabric_notebook('clients/instance_client.Notebook', 'instance_client')
+#instance_logging = import_fabric_notebook('clients/instance_logging.Notebook', 'instance_logging')
 
 credential = DefaultAzureCredential()
 client = SecretClient(vault_url="https://keyvaultvss.vault.azure.net/", credential=credential)
@@ -117,7 +139,7 @@ def main():
     print(active_instances.json())
 if __name__ == "__main__":
     main()
-
+    
 # METADATA ********************
 
 # META {
