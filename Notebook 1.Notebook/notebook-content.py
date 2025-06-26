@@ -25,28 +25,6 @@
 # META }
 
 # CELL ********************
-
-#%run exchange_token_funcs 
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-#%run instance_client
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
 from typing import Any, Dict
 from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential 
@@ -139,6 +117,7 @@ def main():
     print(active_instances.json())
 if __name__ == "__main__":
     main()
+
 # METADATA ********************
 
 # META {
@@ -147,31 +126,3 @@ if __name__ == "__main__":
 # META }
 
 # CELL ********************
-
-#data= json.dumps({"appId" : "digdir/regvil-2025-initiell",    
-#    "instanceOwner": {"personNumber": None,
-#    'organisationNumber': '310075728'},
-#     #"instantiationInstance": {},  
-#    "prefill":{
-#    "Kontaktperson.FulltNavn": "Andreas Andreasen",
-#    "Kontaktperson.FulltNavn": "Andreas.Andreasen@virksomhet.no",
-#    "AnsvarligDepartement": "Andreas Departmenent", 
-#    "AnsvarligVirksomhet": "Andreas Virksomhet", 
-#     "Tiltak.Nummer": "3",
-#    "Tiltak.Tekst": "3",
-#    "Tiltak.Kortnavn": "X",
-#    "Tiltak.ErDeltiltak": "False"
-#    },
-#    "dueBefore":"2025-06-01T12:00:00Z",
-#    "visibleAfter": "2025-05-20T00:00:00Z",
-#     })
-#instance_post = requests.post("https://digdir.apps.tt02.altinn.no/digdir/regvil-2025-initiell/instances/create",
-#    headers={"accept": "application/json","Authorization":f"Bearer {exchange_token()}", "Content-Type":"application/json" }, 
-#    data= data)
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
