@@ -26,7 +26,7 @@ from datetime import datetime, timezone
 
 # CELL ********************
 
-def get_maskinporten_token(aud: Dict[str, str], client: Dict[str, str], environment: str = "test"):
+def get_maskinporten_token(aud: Dict[str, str], secret,  client: Dict[str, str], environment: str = "test"):
   kid = client["kid"]
   integration_id = client["client_id"]
   scope = client["scope"]
@@ -70,8 +70,8 @@ def get_maskinporten_token(aud: Dict[str, str], client: Dict[str, str], environm
      print(res.text())
      return(res.status_code)  
 
-def exchange_token(client: Dict[str, str], maskinporten_endpoints: Dict[str, str], maskinporten_environment: str = "test"):
-  maskinport_token = get_maskinporten_token(maskinporten_endpoints, client, maskinporten_environment)
+def exchange_token(client: Dict[str, str], secret, maskinporten_endpoints: Dict[str, str], maskinporten_environment: str = "test"):
+  maskinport_token = get_maskinporten_token(maskinporten_endpoints, secret, client, maskinporten_environment)
   if type(maskinport_token) != int:
      response_new = requests.get("https://platform.tt02.altinn.no/authentication/api/v1/exchange/maskinporten",
                               headers={"Authorization": f"Bearer {maskinport_token}"})
