@@ -26,9 +26,14 @@
 
 # CELL ********************
 
-from typing import Dict, Union, Optional, List
+from typing import Dict, Optional, Tuple
 import requests
 import logging
+import json
+import uuid
+from datetime import datetime
+from unittest.mock import Mock
+
 
 # METADATA ********************
 
@@ -105,6 +110,77 @@ def make_api_call(method: str, url: str, headers: Dict[str, str], data: Optional
         logging.error(f"Unexpected error in API call: {str(e)}")
         return None
 
+
+def generate_mock_guid() -> str:
+    return str(uuid.uuid4())
+
+
+def mock_post_new_instance(header: Dict[str, str], files: Dict[str, Tuple[str, str, str]]) -> Dict:
+    # Parse instance and datamodel JSONs
+    instance_content = json.loads(files["instance"][1])
+    datamodel_content = json.loads(files["DataModel"][1])
+
+    now_iso = datetime.utcnow().isoformat() + "Z"
+    instance_guid = generate_mock_guid()
+    party_id = "51625403"  # Simulated party ID
+    org_number = instance_content["instanceOwner"]["organisationNumber"]
+
+    response_data = {
+        "id": f"{party_id}/{instance_guid}",
+        "instanceOwner": {
+            "partyId": party_id,
+            "organisationNumber": org_number,
+            "party": {
+                "partyId": party_id,
+                "partyUuid": generate_mock_guid(),
+                "partyTypeName": 2,
+                "orgNumber": org_number,
+                "unitType": "AS",
+                "name": datamodel_content.get("Prefill", {}).get("AnsvarligVirksomhet", {}).get("Navn", None),
+                "isDeleted": False
+            }
+        },
+        "appId": instance_content.get("appId"),
+        "org": instance_content.get("appId").split("/")[0],
+        "dueBefore": instance_content.get("dueBefore"),
+        "visibleAfter": instance_content.get("visibleAfter"),
+        "status": {
+            "isArchived": False,
+            "isSoftDeleted": False,
+            "isHardDeleted": False,
+            "readStatus": 1,
+            "substatus": None
+        },
+        "lastChangedBy": "991825827",
+        "created": now_iso,
+        "lastChanged": now_iso,
+        "data": [
+            {
+                "id": generate_mock_guid(),
+                "instanceGuid": instance_guid,
+                "dataType": "DataModel",
+                "contentType": "application/json",
+                "created": now_iso,
+                "lastChanged": now_iso,
+                "lastChangedBy": "991825827"
+            }
+        ]
+    }
+
+        # Create mock response object
+    mock_response = Mock()
+    mock_response.status_code = 201  # Created
+    mock_response.json.return_value = response_data
+    mock_response.text = json.dumps(response_data)
+    mock_response.headers = {
+        "Content-Type": "application/json",
+        "Location": f"/instances/{party_id}/{instance_guid}"
+    }
+    mock_response.ok = True
+    mock_response.reason = "Created"
+    
+    return mock_response
+
 # METADATA ********************
 
 # META {
@@ -135,19 +211,20 @@ class AltinnInstanceClient:
     
     def get_instance(self, instanceOwnerPartyId: str, instanceGuid: str, header: Dict[str, str]) -> Optional[requests.Response]:
         instance_id = instanceGuid.split("/")[1]
-        print(instanceOwnerPartyId)
-        print(instance_id)
         url = f"{self.basePathApp}/{instanceOwnerPartyId}/{instance_id}"
-        print(url)
         return make_api_call(method="GET", url=url, headers=header)
     
     def get_active_instance(self, instanceOwnerPartyId: str, header: Dict[str, str]) -> Optional[requests.Response]:
         url = f"{self.basePathApp}/{instanceOwnerPartyId}/active"
         return make_api_call(method="GET", url=url, headers=header)
+
+    def post_new_instance(self, header: Dict[str, str], files: Dict[str, Tuple[str, str, str]]) -> Optional[requests.Response]:
+        url = f"{self.basePathApp}"
+        return make_api_call(method="POST", url=url, headers=header, files=files)
     
-    def post_new_instance(self, instanceOwnerPartyId: str, header: Dict[str, str], data: Dict[str, str]) -> Optional[requests.Response]:
-        url = f"{self.basePathApp}/create"
-        return make_api_call(method="POST", url=url, headers=header, data=data)
+    def mock_test_post_new_instance(self, header: Dict[str, str], files: Dict[str, Tuple[str, str, str]]) -> Dict:
+        """Simulates an API response from Altinn after posting a new instance."""
+        return mock_post_new_instance(header, files)
     
     def get_stored_instances_ids(self, header: Dict[str, str]):
         url = f"{self.base_platfrom_url}"

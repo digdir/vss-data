@@ -23,192 +23,117 @@
 
 # CELL ********************
 
-from typing import Any, Dict
+import re
+from typing import Any, Dict, List
 import json
+import datetime
+import os
+import shutil
 
-# METADATA ********************
+class PrefillValidationError(Exception):
+    pass
 
-# META {
-# META   "language": "python",
-# META   "language_group": "jupyter_python"
-# META }
+def _write_json_file(log_changes: Dict[str, Any], log_data: Dict[str, Any], file_path: str) -> None:
+    file_path_str = str(file_path)
 
-# CELL ********************
+    # 1. Load existing data
+    if os.path.exists(file_path_str):
+        backup_path = file_path_str.replace('.json', f'_backup_log.json')
+        shutil.copy2(file_path_str, backup_path)
+    
+    # 2. Merge new data with existing (append new events)
+    for org_number, org_data in log_changes.get("organisations", {}).items():
+        if org_number not in log_data["organisations"]:
+            log_data["organisations"][org_number] = {"events": []}
+        
+        # Append new events to existing events
+        new_events = org_data.get("events", [])
+        log_data["organisations"][org_number]["events"].extend(new_events)
+    
+    # 3. Write merged data
+    with open(file_path_str, 'w', encoding='utf-8') as f:
+        json.dump(log_data, f, ensure_ascii=False, indent=2)
 
-example_data = [
-{'appId': 'digdir/regvil-2025-initiell', 'instanceOwner': {'personNumber': None, 'organisationNumber': '311138693'}, 'prefill': {'Kontaktperson.FulltNavn': '18846397740@testmail.no', 'AnsvarligDepartement': 'STEINKJER', 'AnsvarligVirksomhet': 'OMKOMMEN TRU TIGER AS', 'Tiltak.Nummer': '92', 'Tiltak.Tekst': '92', 'Tiltak.Kortnavn': 'etablere forskningssentre for utvikling og bruk av KI i samfunnet', 'Tiltak.ErDeltiltak': 'False'}, 'dueBefore': '2025-06-01T12:00:00Z', 'visibleAfter': '2025-05-20T00:00:00Z'},
-{'appId': 'digdir/regvil-2025-initiell', 'instanceOwner': {'personNumber': None, 'organisationNumber': '310257265'}, 'prefill': {'Kontaktperson.FulltNavn': '22903147907@testmail.no', 'AnsvarligDepartement': 'ØVRE EIKER', 'AnsvarligVirksomhet': 'USEDVANLIG USELVISK TIGER AS', 'Tiltak.Nummer': '75', 'Tiltak.Tekst': '75', 'Tiltak.Kortnavn': 'prioritere arbeidet med å gjøre tilgjengelig nasjonale datasett som er viktige for offentlig sektor og samfunnet', 'Tiltak.ErDeltiltak': 'False'}, 'dueBefore': '2025-06-01T12:00:00Z', 'visibleAfter': '2025-05-20T00:00:00Z'},
-{'appId': 'digdir/regvil-2025-initiell', 'instanceOwner': {'personNumber': None, 'organisationNumber': '311045407'}, 'prefill': {'Kontaktperson.FulltNavn': '01859799503@testmail.no', 'AnsvarligDepartement': 'STAVANGER', 'AnsvarligVirksomhet': 'DEILIG UROKKELIG TIGER AS', 'Tiltak.Nummer': '25', 'Tiltak.Tekst': '25', 'Tiltak.Kortnavn': 'øke sikkerheten og beredskapen i den digitale grunnmuren i sårbare kommuner og regioner gjennom målrettede tilskudd, og vurdere nye tiltak i lys av den endrede sikkerhetspolitiske situasjonen', 'Tiltak.ErDeltiltak': 'False'}, 'dueBefore': '2025-06-01T12:00:00Z', 'visibleAfter': '2025-05-20T00:00:00Z'},
-{'appId': 'digdir/regvil-2025-initiell', 'instanceOwner': {'personNumber': None, 'organisationNumber': '310706485'}, 'prefill': {'Kontaktperson.FulltNavn': '02822649540@testmail.no', 'AnsvarligDepartement': 'NES', 'AnsvarligVirksomhet': 'AUTONOM SPESIFIKK APE', 'Tiltak.Nummer': '15', 'Tiltak.Tekst': '15', 'Tiltak.Kortnavn': 'videreutvikle virkemidler for digitalisering og innovasjon i offentlig sektor', 'Tiltak.ErDeltiltak': 'False'}, 'dueBefore': '2025-06-01T12:00:00Z', 'visibleAfter': '2025-05-20T00:00:00Z'},
-{'appId': 'digdir/regvil-2025-initiell', 'instanceOwner': {'personNumber': None, 'organisationNumber': '310685232'}, 'prefill': {'Kontaktperson.FulltNavn': '28816898287@testmail.no', 'AnsvarligDepartement': 'OSLO', 'AnsvarligVirksomhet': 'PLUTSELIG FRYKTLØS TIGER AS', 'Tiltak.Nummer': '102', 'Tiltak.Tekst': '102', 'Tiltak.Kortnavn': 'vurdere om låne- og tilskuddsordninger kan innrettes mer mot risikoavlastning for å stimulere til digital innovasjon i næringslivet, særlig for oppstartsbedrifter', 'Tiltak.ErDeltiltak': 'False'}, 'dueBefore': '2025-06-01T12:00:00Z', 'visibleAfter': '2025-05-20T00:00:00Z'},
-{'appId': 'digdir/regvil-2025-initiell', 'instanceOwner': {'personNumber': None, 'organisationNumber': '310075728'}, 'prefill': {'Kontaktperson.FulltNavn': '01909498089@testmail.no', 'AnsvarligDepartement': 'KRISTIANSAND', 'AnsvarligVirksomhet': 'KVADRATISK BRA APE', 'Tiltak.Nummer': '15', 'Tiltak.Tekst': '15', 'Tiltak.Kortnavn': 'videreutvikle virkemidler for digitalisering og innovasjon i offentlig sektor', 'Tiltak.ErDeltiltak': 'True'}, 'dueBefore': '2025-06-01T12:00:00Z', 'visibleAfter': '2025-05-20T00:00:00Z'},]
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "jupyter_python"
-# META }
-
-# CELL ********************
-
-example_instance = {'id': '51625403/0512ce74-90a9-4b5c-ab15-910f60db92d1',
- 'instanceOwner': {'partyId': '51625403',
-  'personNumber': None,
-  'organisationNumber': '311138693',
-  'username': None,
-  'party': {'partyId': 51625403,
-   'partyUuid': '1ed8aa98-31ed-4f78-b1f6-f12f46e8de04',
-   'partyTypeName': 2,
-   'ssn': None,
-   'orgNumber': '311138693',
-   'unitType': 'AS',
-   'name': 'OMKOMMEN TRU TIGER AS',
-   'isDeleted': False}},
- 'appId': 'digdir/regvil-2025-initiell',
- 'org': 'digdir',
- 'selfLinks': {'apps': 'https://digdir.apps.tt02.altinn.no/digdir/regvil-2025-initiell/instances/51625403/0512ce74-90a9-4b5c-ab15-910f60db92d1',
-  'platform': 'https://platform.tt02.altinn.no/storage/api/v1/instances/51625403/0512ce74-90a9-4b5c-ab15-910f60db92d1'},
- 'dueBefore': '2025-06-01T12:00:00Z',
- 'visibleAfter': '2025-05-20T00:00:00Z',
- 'process': {'started': '2025-06-24T10:42:49.5376949Z',
-  'startEvent': 'StartEvent_1',
-  'currentTask': None,
-  'ended': '2025-06-24T10:43:23.1757135Z',
-  'endEvent': 'EndEvent_1'},
- 'status': {'isArchived': True,
-  'archived': '2025-06-24T10:43:23.1757135Z',
-  'isSoftDeleted': False,
-  'softDeleted': None,
-  'isHardDeleted': False,
-  'hardDeleted': None,
-  'readStatus': 1,
-  'substatus': None},
- 'completeConfirmations': [{'stakeholderId': 'digdir',
-   'confirmedOn': '2025-06-24T13:17:29.8839554Z'}],
- 'data': [{'id': 'fed122b9-672c-4b34-9a47-09f501d5af72',
-   'instanceGuid': '0512ce74-90a9-4b5c-ab15-910f60db92d1',
-   'dataType': 'DataModel',
-   'filename': None,
-   'contentType': 'application/xml',
-   'blobStoragePath': 'digdir/regvil-2025-initiell/0512ce74-90a9-4b5c-ab15-910f60db92d1/data/fed122b9-672c-4b34-9a47-09f501d5af72',
-   'selfLinks': {'apps': 'https://digdir.apps.tt02.altinn.no/digdir/regvil-2025-initiell/instances/51625403/0512ce74-90a9-4b5c-ab15-910f60db92d1/data/fed122b9-672c-4b34-9a47-09f501d5af72',
-    'platform': 'https://platform.tt02.altinn.no/storage/api/v1/instances/51625403/0512ce74-90a9-4b5c-ab15-910f60db92d1/data/fed122b9-672c-4b34-9a47-09f501d5af72'},
-   'size': 830,
-   'contentHash': None,
-   'locked': True,
-   'refs': None,
-   'isRead': True,
-   'tags': [],
-   'userDefinedMetadata': None,
-   'metadata': None,
-   'deleteStatus': None,
-   'fileScanResult': 'NotApplicable',
-   'references': None,
-   'created': '2025-06-24T10:42:49.5878193Z',
-   'createdBy': '991825827',
-   'lastChanged': '2025-06-24T10:43:23.253583Z',
-   'lastChangedBy': '1260288'},
-  {'id': '845875af-abf2-4de8-938b-91cd7b9a2cc9',
-   'instanceGuid': '0512ce74-90a9-4b5c-ab15-910f60db92d1',
-   'dataType': 'ref-data-as-pdf',
-   'filename': 'Rapportering på tiltak i digitaliseringsstrategien.pdf',
-   'contentType': 'application/pdf',
-   'blobStoragePath': 'digdir/regvil-2025-initiell/0512ce74-90a9-4b5c-ab15-910f60db92d1/data/845875af-abf2-4de8-938b-91cd7b9a2cc9',
-   'selfLinks': {'apps': 'https://digdir.apps.tt02.altinn.no/digdir/regvil-2025-initiell/instances/51625403/0512ce74-90a9-4b5c-ab15-910f60db92d1/data/845875af-abf2-4de8-938b-91cd7b9a2cc9',
-    'platform': 'https://platform.tt02.altinn.no/storage/api/v1/instances/51625403/0512ce74-90a9-4b5c-ab15-910f60db92d1/data/845875af-abf2-4de8-938b-91cd7b9a2cc9'},
-   'size': 44285,
-   'contentHash': None,
-   'locked': False,
-   'refs': None,
-   'isRead': True,
-   'tags': [],
-   'userDefinedMetadata': None,
-   'metadata': None,
-   'deleteStatus': None,
-   'fileScanResult': 'NotApplicable',
-   'references': [{'value': 'Task_1',
-     'relation': 'GeneratedFrom',
-     'valueType': 'Task'}],
-   'created': '2025-06-24T10:43:25.6505215Z',
-   'createdBy': '1260288',
-   'lastChanged': '2025-06-24T10:43:25.650522Z',
-   'lastChangedBy': '1260288'}],
- 'presentationTexts': {'Tiltaksnavn': 'sørge for en helhetlig og langsiktig prioritering av digitaliseringstiltak i offentlig sektor',
-  'Kontaktperson': 'Meg'},
- 'dataValues': {'dialog.id': '0197a188-8a48-7b5c-ab15-910f60db92d1'},
- 'created': '2025-06-24T10:42:49.5447149Z',
- 'createdBy': '991825827',
- 'lastChanged': '2025-06-24T13:17:29.883956Z',
- 'lastChangedBy': '991825827'}
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "jupyter_python"
-# META }
-
-# CELL ********************
 
 class InstanceTracker:
-    def __init__(self, log_file: Dict[str, Any]):
+    def __init__(self, log_file: Dict[str, Any], log_path: str = None):
         self.log_file = log_file
         self.log_changes = {} 
+        self.log_path = log_path
     
     @classmethod
     def from_log_file(cls, path_to_json_file: str):
         try:
-            with open(path_to_json_file, 'r') as f:
+            with open(path_to_json_file, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-            return cls(data)
+            
+            # Ensure proper structure
+            if "organisations" not in data:
+                data["organisations"] = {}
+            return cls(data, log_path=path_to_json_file)
         except FileNotFoundError:
-            raise FileNotFoundError(f"Log file not found: {path_to_json_file}")
+            # File doesn't exist, start with proper structure
+            data = {"organisations": {}}
+            return cls(data, log_path=path_to_json_file)
         except json.JSONDecodeError as e:
             raise ValueError(f"Invalid JSON in log file: {e}")
 
-    def has_processed_org(self, org_number: str) -> bool:
-        return self.log_file.get("organisations", {}).get(org_number) is not None
+    def has_processed_instance(self, org_number: str, digitaliseringstiltak_report_id: str) -> bool:
+        org_data = self.log_file.get("organisations", {}).get(org_number, {})
+        events = org_data.get("events", [])
+        for event in events:
+            if (event.get("event_type") == "skjema_instance_created" and
+                event.get("digitaliseringstiltak_report_id") == digitaliseringstiltak_report_id):
+                return True
+        return False
+
         
-    def logging_instance(self, org_number: str, instance_meta_data: dict, api_response: dict):
+    def logging_instance(self, org_number: str, digitaliseringstiltak_report_id: str, instance_meta_data: dict):
+        if not org_number or not digitaliseringstiltak_report_id:
+          raise ValueError("Organization number and report ID cannot be empty")
+        
         if org_number != instance_meta_data['instanceOwner'].get("organisationNumber"):
             raise ValueError(f"Organization numbers do not match: {org_number} != {instance_meta_data['instanceOwner'].get('organisationNumber')}")
+
         datamodel_metadata = get_meta_data_info(instance_meta_data["data"])
-        self.log_changes[org_number] = {
+        instance_log_entry = {
+            "event_type": "skjema_instance_created",
+            "digitaliseringstiltak_report_id": digitaliseringstiltak_report_id, 
             "org_number": org_number,
-            "org_name": instance_meta_data.get("name"),
-            "processed_timestamp": datetime.utcnow().isoformat(),
+            "virksomhets_name": instance_meta_data.get("instanceOwner").get("party").get("name"),
+            "processed_timestamp": datetime.datetime.utcnow().isoformat(),
             "instancePartyId": instance_meta_data['instanceOwner'].get("partyId"),
             "instanceId": instance_meta_data.get("id"),
             "instance_info": {
-                "last_changed": instance_meta_data["dataValues"].get('lastChanged'),
+                "last_changed": instance_meta_data.get('lastChanged'),
                 "last_changed_by": instance_meta_data.get('lastChangedBy'),
-                "created": instance_meta_data["dataValues"].get('created'),
+                "created": instance_meta_data.get('created'),
             },
             "data_info": {
-                "last_changed": instance_meta_data["dataValues"].get('lastChanged'),
-                "last_changed_by": instance_meta_data.get('lastChangedBy'),
-                "created": instance_meta_data["dataValues"].get('created'),
+                "last_changed": datamodel_metadata.get('lastChanged'),
+                "last_changed_by": datamodel_metadata.get('lastChangedBy'),
+                "created": datamodel_metadata.get('created'),
+                "dataGuid": datamodel_metadata.get('id'),
             },
-            
-            "verification": False,
         }
+
+            # Simplified - self.log_file["organisations"] already exists from initialization
+        if org_number not in self.log_file["organisations"]:
+            self.log_file["organisations"][org_number] = {"events": []}
+
+        self.log_file["organisations"][org_number]["events"].append(instance_log_entry)
+        self.log_changes[org_number] = instance_log_entry
+
+
+    def save_to_disk(self) -> None:
+        if not self.log_path:
+            raise ValueError("No log file path set.")
+        _write_json_file(self.log_changes, self.log_file, self.log_path)
         
-    def update_verification_status(self, org_number: str, 
-                                 api_verification: bool):
-        self.log_changes[org_number]["verification"] = True
+        # Clear changes after saving
+        self.log_changes.clear()
+
                             
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "jupyter_python"
-# META }
-
-# CELL ********************
-
-from typing import List, Dict, Optional
 def get_meta_data_info(list_of_data_instance_meta_info: List[Dict[str, str]]) -> Dict[str, str]:
     if not list_of_data_instance_meta_info:
         raise ValueError("No instance metadata provided.")
@@ -222,246 +147,167 @@ def get_meta_data_info(list_of_data_instance_meta_info: List[Dict[str, str]]) ->
 
     raise ValueError("No instance with dataType='DataModel' and contentType='application/xml' or 'application/json' was found.")
 
+def get_required_key(record, key):
+    if key not in record:
+        raise KeyError(f"Missing required key: {key}")
+    return record[key]
 
-
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "jupyter_python"
-# META }
-
-# CELL ********************
-
-#GET INSTANCE RESPONSE
-instance = [{'id': '51101237/5a700bc2-2af3-484a-b3bd-dd347aa40484',
-  'presentationTexts': None,
-  'dueBefore': None,
-  'lastChanged': '2025-04-12T14:09:52.555628Z',
-  'lastChangedBy': 'KETSJUP LYSTIG'}]
-
-prefill = {"regjeringen vil": "15","Ansvarlig dept": "KRISTIANSAND", "organisasjonsnummer": "310075728",
-"nav": "KVADRATISK BRA APE","kontaktperson": "01909498089","epost_kontaktperson": "01909498089@testmail.no"}
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "jupyter_python"
-# META }
-
-# CELL ********************
-
-data_model_schema = {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "http://altinn-repositories:3000/digdir/regvil-2025-initiell/App/models/DataModel.schema.json",
-  "info": {
-    "rootNode": ""
-  },
-  "@xsdNamespaces": {
-    "xsd": "http://www.w3.org/2001/XMLSchema",
-    "xsi": "http://www.w3.org/2001/XMLSchema-instance",
-    "seres": "http://seres.no/xsd/forvaltningsdata"
-  },
-  "@xsdSchemaAttributes": {
-    "AttributeFormDefault": "Unqualified",
-    "ElementFormDefault": "Qualified",
-    "BlockDefault": "None",
-    "FinalDefault": "None"
-  },
-  "@xsdRootElement": "DataModel",
-  "type": "object",
-  "$defs": {
-    "Kontaktperson": {
-      "type": "object",
-      "properties": {
-        "FulltNavn": {
-          "type": "string",
-          "maxLength": 5000
-        },
-        "Telefonnummer": {
-          "type": "string",
-          "maxLength": 5000
-        },
-        "EPostadresse": {
-          "type": "string",
-          "format": "email",
-          "maxLength": 5000
+def transform_flat_to_nested_with_prefill(flat_record):
+    return {
+        "Prefill": {
+            "AnsvarligDepartement": {
+                "Navn": get_required_key(flat_record,"AnsvarligDepartement.Navn"),
+                "Organisasjonsnummer":  get_required_key(flat_record,"AnsvarligDepartement.Organisasjonsnummer")
+            },
+            "AnsvarligVirksomhet": {
+                "Navn":  get_required_key(flat_record,"AnsvarligVirksomhet.Navn"),
+                "Organisasjonsnummer":  get_required_key(flat_record,"AnsvarligVirksomhet.Organisasjonsnummer")
+            },
+            "Kontaktperson": {
+                "FulltNavn":  get_required_key(flat_record,"Kontaktperson.FulltNavn"),
+                "Telefonnummer":  get_required_key(flat_record,"Kontaktperson.Telefonnummer"),
+                "EPostadresse":  get_required_key(flat_record,"Kontaktperson.EPostadresse")
+            },
+            "Tiltak": {
+                "Nummer": get_required_key(flat_record,"Tiltak.Nummer"),
+                "Tekst":  get_required_key(flat_record,"Tiltak.Tekst"),
+                "Kortnavn":  get_required_key(flat_record,"Tiltak.Kortnavn"),
+                "ErDeltiltak":  get_required_key(flat_record,"Tiltak.ErDeltiltak")
+            },
+            "Kapittel": {
+                "Nummer":  get_required_key(flat_record,"Kapittel.Nummer"),
+                "Tekst":  get_required_key(flat_record,"Kapittel.Tekst")
+            },
+            "Maal": {
+                "Nummer":  get_required_key(flat_record,"Maal.Nummer"),
+                "Tekst":  get_required_key(flat_record,"Maal.Tekst")
+            }
         }
-      }
-    },
-    "AndreVirksomheter": {
-      "type": "object",
-      "properties": {
-        "Navn": {
-          "type": "string",
-          "maxLength": 5000
-        }
-      }
-    },
-    "Valg": {
-      "type": "object",
-      "properties": {
-        "Nummer": {
-          "type": "string",
-          "maxLength": 5000
-        },
-        "Tekst": {
-          "type": "string",
-          "maxLength": 5000
-        }
-      }
-    },
-    "Tiltak": {
-      "type": "object",
-      "properties": {
-        "Nummer": {
-          "type": "string",
-          "maxLength": 5000
-        },
-        "Tekst": {
-          "type": "string",
-          "maxLength": 5000
-        },
-        "Kortnavn": {
-          "type": "string",
-          "maxLength": 5000
-        },
-        "ErDeltiltak": {
-          "type": "boolean"
-        },
-        "Label": {
-          "type": "string",
-          "maxLength": 5000
-        }
-      }
     }
-  },
-  "properties": {
-    "AnsvarligDepartement": {
-      "type": "string",
-      "maxLength": 5000
-    },
-    "AnsvarligVirksomhet": {
-      "type": "string",
-      "maxLength": 5000
-    },
-    "Kontaktperson": {
-      "$ref": "#/$defs/Kontaktperson"
-    },
-    "AndreKontaktpersoner": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/Kontaktperson"
-      }
-    },
-    "AndreVirksomheter": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/AndreVirksomheter"
-      }
-    },
-    "Tiltak": {
-      "$ref": "#/$defs/Tiltak"
-    },
-    "Kapittel": {
-      "$ref": "#/$defs/Valg"
-    },
-    "Maal": {
-      "$ref": "#/$defs/Valg"
-    },
-    "AndreMaal": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/Valg"
-      }
-    },
-    "ErTiltaketPaabegynt": {
-      "type": "boolean"
-    },
-    "DatoPaabegynt": {
-      "type": "string",
-      "maxLength": 5000
-    },
-    "VetOppstartsDato": {
-      "type": "boolean"
-    },
-    "DatoForventetOppstart": {
-      "type": "string",
-      "maxLength": 5000
-    }
-  }
-}
 
-# METADATA ********************
+def validate_prefill_data(prefill_data_row: Dict[str, Any]) -> bool:
 
-# META {
-# META   "language": "python",
-# META   "language_group": "jupyter_python"
-# META }
+    # 1. Check if all fields are present and not empty
+    all_fields = [
+        "AnsvarligDepartement.Navn",
+        "AnsvarligDepartement.Organisasjonsnummer", 
+        "AnsvarligVirksomhet.Navn",
+        "AnsvarligVirksomhet.Organisasjonsnummer",
+        "Kontaktperson.FulltNavn",
+        "Kontaktperson.Telefonnummer",
+        "Kontaktperson.EPostadresse",
+        "Tiltak.Nummer",
+        "Tiltak.Tekst", 
+        "Tiltak.Kortnavn",
+        "Tiltak.ErDeltiltak",
+        "Kapittel.Nummer",
+        "Kapittel.Tekst",
+        "Maal.Nummer",
+        "Maal.Tekst",
+        "digitaliseringstiltak_report_id"
+    ]
 
-# CELL ********************
-
-from typing import Dict, List, Any
-
-def extract_string_fields(definition: Dict[str, Any], prefix: str = "") -> List[str]:
-    fields = []
-    if definition.get("type") == "object" and "properties" in definition:
-        for prop_name, prop_def in definition["properties"].items():
-            full_path = f"{prefix}.{prop_name}" if prefix else prop_name
-            if prop_def.get("type") == "string":
-                fields.append(full_path)
-            elif prop_def.get("type") == "object":
-                fields.extend(extract_string_fields(prop_def, full_path))
-    return fields
-
-def get_datamodel_prefill_structure(datamodel_structure: Dict[str, Any]) -> List[str]:
-    prefill_structure = []
-    defs = datamodel_structure.get("$defs")
-
-    for def_name, def_value in defs.items():
-        prefill_structure.extend(extract_string_fields(def_value, def_name))
+    # Check if 
     
-    return prefill_structure
+    # Check all fields are present and not empty
+    for field in all_fields:
+        if field not in prefill_data_row:
+            raise PrefillValidationError(f"Missing field: {field}")
+        value = prefill_data_row[field]
+        
+        # Special handling for boolean field
+        if field == "Tiltak.ErDeltiltak":
+            if value is None:
+                raise PrefillValidationError(f"Field {field} cannot be None")
+            continue
+        
+        # For all other fields, check not empty
+        if value is None or (isinstance(value, str) and not value.strip()):
+            raise PrefillValidationError(f"Field {field} cannot be None")
+    
+    # 2. Validate Organisasjonsnummer (Norwegian org number - 9 digits)
+    org_numbers = [
+        "AnsvarligDepartement.Organisasjonsnummer",
+        "AnsvarligVirksomhet.Organisasjonsnummer"
+    ]
+    
+    for field in org_numbers:
+        org_number = str(prefill_data_row[field])
+        if not _is_valid_org_number(org_number):
+            raise PrefillValidationError(f"Invalid organisation number format in {field}: {org_number} (must be 9 digits)")
+    
+    # 3. Validate digitaliseringstiltak_report_id (UUID)
+    report_id = prefill_data_row["digitaliseringstiltak_report_id"]
+    if not _is_valid_uuid(str(report_id)):
+        raise PrefillValidationError(f"Invalid UUID format for digitaliseringstiltak_report_id: {report_id}")
+    
+    # 4. Validate email
+    email = prefill_data_row["Kontaktperson.EPostadresse"]
+    if not _is_valid_email(str(email)):
+        raise PrefillValidationError(f"Invalid email format: {email}")
+    
+    # 5. Validate phone number
+    phone = prefill_data_row["Kontaktperson.Telefonnummer"] 
+    if not _is_valid_phone(str(phone)):
+        raise PrefillValidationError(f"Invalid phone number format: {phone}")
+    
+    # 6. Validate string fields that should be numbers as strings
+    number_string_fields = [
+        "Tiltak.Nummer",
+        "Tiltak.Tekst", 
+        "Kapittel.Nummer",
+        "Kapittel.Tekst",
+        "Maal.Nummer", 
+        "Maal.Tekst"
+    ]
+    
+    for field in number_string_fields:
+        value = prefill_data_row[field]
+        if not isinstance(value, str):
+            raise PrefillValidationError(f"Field {field} must be string, got {type(value)}")
+        
+        # Check if it contains at least some numeric content (allow formats like "2.1.4")
+        if not re.search(r'\d', value):
+            raise PrefillValidationError(f"Field {field} must contain numbers: {value}")
+    
+    # 7. Validate boolean field
+    tiltak_er_deltiltak = prefill_data_row["Tiltak.ErDeltiltak"]
+    if not isinstance(tiltak_er_deltiltak, bool):
+        raise PrefillValidationError(f"Field Tiltak.ErDeltiltak must be boolean, got {type(tiltak_er_deltiltak)}")
+    return True
 
 
-# METADATA ********************
+def _is_valid_org_number(org_number: str) -> bool:
+    """Validate Norwegian organisation number (9 digits)"""
+    if not isinstance(org_number, str):
+        return False
+    return re.match(r'^\d{9}$', org_number) is not None
 
-# META {
-# META   "language": "python",
-# META   "language_group": "jupyter_python"
-# META }
 
-# CELL ********************
+def _is_valid_uuid(uuid_string: str) -> bool:
+    """Validate UUID format"""
+    if not isinstance(uuid_string, str):
+        return False
+    uuid_pattern = r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    return re.match(uuid_pattern, uuid_string.lower()) is not None
 
-prefill_structure = get_datamodel_prefill_structure(data_model_schema)
 
-# METADATA ********************
+def _is_valid_email(email: str) -> bool:
+    """Validate email format"""
+    if not isinstance(email, str):
+        return False
+    email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return re.match(email_pattern, email) is not None
 
-# META {
-# META   "language": "python",
-# META   "language_group": "jupyter_python"
-# META }
 
-# CELL ********************
-
-prefill_structure
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "jupyter_python"
-# META }
-
-# CELL ********************
-
-def main():
-    print("This works change")
-
-if __name__ == "__main__":
-    main()
+def _is_valid_phone(phone: str) -> bool:
+    """Validate Norwegian phone number format"""
+    if not isinstance(phone, str):
+        return False
+    # Remove spaces and common separators
+    cleaned = re.sub(r'[\s\-\(\)]', '', phone)
+    # Norwegian format: +47 followed by 8 digits, or just 8 digits
+    return re.match(r'^(\+47)?[0-9]{8}$', cleaned) is not None
 
 # METADATA ********************
 
