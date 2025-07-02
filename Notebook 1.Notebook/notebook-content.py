@@ -57,7 +57,7 @@ import os
 import sys
 import importlib
 import importlib.util
-import requests
+import logging
 
 def import_fabric_notebook(notebook_path, module_name):
     """Import a Fabric notebook's Python content"""
@@ -122,7 +122,6 @@ def main():
             }
             created_instance = regvil_instance_client.mock_test_post_new_instance(header, files)
             instance_meta_data = created_instance.json()
-            updated_instance = regvil_instance_client.mock_test_update_substatus(header, instance_meta_data["instanceOwner"]["partyId"], instance_meta_data["id"], prefill_data_row["digitaliseringstiltak_report_id"])
 
             bearer_token = exchange_token_funcs.exchange_token(maskinport_client, secret_value, maskinporten_endpoints) 
             header = {
@@ -130,25 +129,29 @@ def main():
                 "Authorization": f"Bearer {bearer_token}",
                 "Content-Type": "application/json"
             }
-            updated_instance = regvil_instance_client.mock_test_update_substatus(instance_meta_data["instanceOwner"]["partyId"], instance_meta_data["id"], prefill_data_row["digitaliseringstiltak_report_id"], header)
-            #updated_instance = regvil_instance_client.update_substatus("51531148", "51531148/560d0e53-b034-4994-9dd7-3e1876c23f27", prefill_data_row["digitaliseringstiltak_report_id"], header)
-            print("=====================================================================")
-            print(updated_instance.status_code)
-            print(updated_instance.json())
-            #if created_instance.status_code == 201:
-            #    tracker.logging_instance(prefill_data_row["AnsvarligVirksomhet.Organisasjonsnummer"], prefill_data_row["digitaliseringstiltak_report_id"], created_instance.json())
-            #    tracker.save_to_disk()
-            #else:
-            #    try:
-            #        error_details = created_instance.json()
-            #        error_msg = error_details.get('error', 'Unknown error')
-            #    except:
-            #        error_msg = created_instance.text or 'No error details'
+            if created_instance.status_code == 201:
+                tracker.logging_instance(prefill_data_row["AnsvarligVirksomhet.Organisasjonsnummer"], prefill_data_row["digitaliseringstiltak_report_id"], created_instance.json())
+                tracker.save_to_disk()
+                
+                bearer_token = exchange_token_funcs.exchange_token(maskinport_client, secret_value, maskinporten_endpoints) 
+                header = {
+                "accept": "application/json",
+                "Authorization": f"Bearer {bearer_token}",
+                "Content-Type": "application/json"
+                }
+                updated_instance = regvil_instance_client.mock_test_update_substatus(instance_meta_data["instanceOwner"]["partyId"], instance_meta_data["id"], prefill_data_row["digitaliseringstiltak_report_id"], header)
 
-            #    logging.warning(f"API Error: Org {prefill_data_row['AnsvarligVirksomhet.Organisasjonsnummer']}, "
-            #                    f"Report {prefill_data_row['digitaliseringstiltak_report_id']} - "
-            #                    f"Status: {created_instance.status_code} - "
-            #                    f"Error message: {error_msg}")
+            else:
+                try:
+                    error_details = created_instance.json()
+                    error_msg = error_details.get('error', 'Unknown error')
+                except:
+                    error_msg = created_instance.text or 'No error details'
+
+                    logging.warning(f"API Error: Org {prefill_data_row['AnsvarligVirksomhet.Organisasjonsnummer']}, "
+                                f"Report {prefill_data_row['digitaliseringstiltak_report_id']} - "
+                                f"Status: {created_instance.status_code} - "
+                                f"Error message: {error_msg}")
         else:
             print("Not created")
 
