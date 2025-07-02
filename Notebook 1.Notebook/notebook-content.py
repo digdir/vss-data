@@ -97,51 +97,68 @@ def main():
     regvil_instance_client = instance_client.AltinnInstanceClient.init_from_config(test_config_client_file)
 
     tracker = instance_logging.InstanceTracker.from_log_file(Path(__file__).parent.parent / "data" / "instance_log" / "instance_log.json")
-
+    
     for prefill_data_row in test_prefill_data[:1]:
         instance_logging.validate_prefill_data(prefill_data_row)
+        data_model = instance_logging.transform_flat_to_nested_with_prefill(prefill_data_row)
+        org_number = prefill_data_row["AnsvarligVirksomhet.Organisasjonsnummer"]
+        report_id = prefill_data_row["digitaliseringstiltak_report_id"]
+
+        # Step 1: Check if already processed (log or API)
+        if tracker.has_processed_instance(org_number, report_id):
+            print("Not created because already in log")
+            continue
+
+        if regvil_instance_client.instance_created(header, org_number, report_id):
+            print("Not created because already in storage")
+            continue
 
         data_model = instance_logging.transform_flat_to_nested_with_prefill(prefill_data_row)
-
-        if not tracker.has_processed_instance(prefill_data_row["AnsvarligVirksomhet.Organisasjonsnummer"], prefill_data_row["digitaliseringstiltak_report_id"]):
-            instance_data = {"appId" : "digdir/regvil-2025-initiell",    
-            "instanceOwner": {"personNumber": None,
-            "organisationNumber": data_model["Prefill"]["AnsvarligVirksomhet"]["Organisasjonsnummer"]},
-            "dueBefore":"2025-09-01T12:00:00Z",
-            "visibleAfter": "2025-06-29T00:00:00Z"
-            }
-            files = {
-                'instance': ('instance.json', json.dumps(instance_data), 'application/json'),
-                'DataModel': ('datamodel.json', json.dumps(data_model), 'application/json')
-            }
-            bearer_token = exchange_token_funcs.exchange_token(maskinport_client, secret_value, maskinporten_endpoints) 
-            header = {
+        bearer_token = exchange_token_funcs.exchange_token(maskinport_client, secret_value, maskinporten_endpoints) 
+        header = {
                 "accept": "application/json",
                 "Authorization": f"Bearer {bearer_token}",
                 "Content-Type": "application/json"
             }
-            created_instance = regvil_instance_client.mock_test_post_new_instance(header, files)
-            instance_meta_data = created_instance.json()
+        instance_data = {"appId" : "digdir/regvil-2025-initiell",    
+                "instanceOwner": {"personNumber": None,
+                "organisationNumber": data_model["Prefill"]["AnsvarligVirksomhet"]["Organisasjonsnummer"]},
+                "dueBefore":"2025-09-01T12:00:00Z",
+                "visibleAfter": "2025-06-29T00:00:00Z"
+        }
+        files = {
+                    'instance': ('instance.json', json.dumps(instance_data), 'application/json'),
+                    'DataModel': ('datamodel.json', json.dumps(data_model), 'application/json')
+        }
+        bearer_token = exchange_token_funcs.exchange_token(maskinport_client, secret_value, maskinporten_endpoints) 
+        header = {
+                    "accept": "application/json",
+                    "Authorization": f"Bearer {bearer_token}",
+                    "Content-Type": "application/json"
+                }
+        created_instance = regvil_instance_client.mock_test_post_new_instance(header, files)
+        print(created_instance.status_code)
+        instance_meta_data = created_instance.json()
 
-            bearer_token = exchange_token_funcs.exchange_token(maskinport_client, secret_value, maskinporten_endpoints) 
-            header = {
-                "accept": "application/json",
-                "Authorization": f"Bearer {bearer_token}",
-                "Content-Type": "application/json"
+        bearer_token = exchange_token_funcs.exchange_token(maskinport_client, secret_value, maskinporten_endpoints) 
+        header = {
+                    "accept": "application/json",
+                    "Authorization": f"Bearer {bearer_token}",
+                    "Content-Type": "application/json"
             }
-            if created_instance.status_code == 201:
+        if created_instance.status_code == 201:
                 tracker.logging_instance(prefill_data_row["AnsvarligVirksomhet.Organisasjonsnummer"], prefill_data_row["digitaliseringstiltak_report_id"], created_instance.json())
                 tracker.save_to_disk()
-                
+                    
                 bearer_token = exchange_token_funcs.exchange_token(maskinport_client, secret_value, maskinporten_endpoints) 
                 header = {
-                "accept": "application/json",
-                "Authorization": f"Bearer {bearer_token}",
-                "Content-Type": "application/json"
+                    "accept": "application/json",
+                    "Authorization": f"Bearer {bearer_token}",
+                    "Content-Type": "application/json"
                 }
                 updated_instance = regvil_instance_client.mock_test_update_substatus(instance_meta_data["instanceOwner"]["partyId"], instance_meta_data["id"], prefill_data_row["digitaliseringstiltak_report_id"], header)
 
-            else:
+        else:
                 try:
                     error_details = created_instance.json()
                     error_msg = error_details.get('error', 'Unknown error')
@@ -149,11 +166,9 @@ def main():
                     error_msg = created_instance.text or 'No error details'
 
                     logging.warning(f"API Error: Org {prefill_data_row['AnsvarligVirksomhet.Organisasjonsnummer']}, "
-                                f"Report {prefill_data_row['digitaliseringstiltak_report_id']} - "
-                                f"Status: {created_instance.status_code} - "
-                                f"Error message: {error_msg}")
-        else:
-            print("Not created")
+                                    f"Report {prefill_data_row['digitaliseringstiltak_report_id']} - "
+                                    f"Status: {created_instance.status_code} - "
+                                    f"Error message: {error_msg}")
 
 if __name__ == "__main__":
     main()
