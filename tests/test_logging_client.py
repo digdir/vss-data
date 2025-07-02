@@ -77,3 +77,171 @@ def test_missing_key_raises_error():
     }
     with pytest.raises(KeyError):
         instance_logging.transform_flat_to_nested_with_prefill(flat_record)
+
+
+def test_returns_true_when_exact_match_found():
+    """Test returns True when exact org_number and report_id match"""
+    log_data = {
+            "organisations": {
+                "123456789": {
+                    "events": [
+                        {
+                            "event_type": "skjema_instance_created",
+                            "digitaliseringstiltak_report_id": "target-uuid-123",
+                            "org_number": "123456789"
+                        }
+                    ]
+                }
+            }
+        }
+    tracker = instance_logging.InstanceTracker(log_data)
+    result = tracker.has_processed_instance("123456789", "target-uuid-123")
+    assert result is True
+
+def test_returns_false_when_org_not_found():
+    """Test returns False when organisation doesn't exist"""
+    log_data = {
+            "organisations": {
+                "123456789": {
+                    "events": [
+                        {
+                            "event_type": "skjema_instance_created",
+                            "digitaliseringstiltak_report_id": "some-uuid",
+                            "org_number": "123456789"
+                        }
+                    ]
+                }
+            }
+        }
+    tracker = instance_logging.InstanceTracker(log_data)
+    result = tracker.has_processed_instance("999999999", "some-uuid")
+    assert result is False
+    
+def test_returns_false_when_report_id_not_found():
+    """Test returns False when report_id doesn't exist for org"""
+    log_data = {
+            "organisations": {
+                "123456789": {
+                    "events": [
+                        {
+                            "event_type": "skjema_instance_created",
+                            "digitaliseringstiltak_report_id": "existing-uuid",
+                            "org_number": "123456789"
+                        }
+                    ]
+                }
+            }
+        }
+    tracker = instance_logging.InstanceTracker(log_data)
+    result = tracker.has_processed_instance("123456789", "different-uuid")
+    assert result is False
+    
+def test_returns_false_when_wrong_event_type():
+    """Test returns False when event_type is not 'skjema_instance_created'"""
+    log_data = {
+            "organisations": {
+                "123456789": {
+                    "events": [
+                        {
+                            "event_type": "different_event_type",
+                            "digitaliseringstiltak_report_id": "target-uuid",
+                            "org_number": "123456789"
+                        }
+                    ]
+                }
+            }
+        }
+    tracker = instance_logging.InstanceTracker(log_data)
+    result = tracker.has_processed_instance("123456789", "target-uuid")
+    assert result is False
+    
+def test_returns_true_with_multiple_events_target_first():
+    """Test returns True when target event is first in list"""
+    log_data = {
+            "organisations": {
+                "123456789": {
+                    "events": [
+                        {
+                            "event_type": "skjema_instance_created",
+                            "digitaliseringstiltak_report_id": "target-uuid",
+                            "org_number": "123456789"
+                        },
+                        {
+                            "event_type": "skjema_instance_created",
+                            "digitaliseringstiltak_report_id": "other-uuid",
+                            "org_number": "123456789"
+                        }
+                    ]
+                }
+            }
+        }
+    tracker = instance_logging.InstanceTracker(log_data)
+    result = tracker.has_processed_instance("123456789", "target-uuid")
+    assert result is True
+    
+def test_returns_true_with_multiple_events_target_last():
+    """Test returns True when target event is last in list"""
+    log_data = {
+            "organisations": {
+                "123456789": {
+                    "events": [
+                        {
+                            "event_type": "skjema_instance_created",
+                            "digitaliseringstiltak_report_id": "other-uuid-1",
+                            "org_number": "123456789"
+                        },
+                        {
+                            "event_type": "skjema_instance_created",
+                            "digitaliseringstiltak_report_id": "other-uuid-2",
+                            "org_number": "123456789"
+                        },
+                        {
+                            "event_type": "skjema_instance_created",
+                            "digitaliseringstiltak_report_id": "target-uuid",
+                            "org_number": "123456789"
+                        }
+                    ]
+                }
+            }
+        }
+    tracker = instance_logging.InstanceTracker(log_data)
+    result = tracker.has_processed_instance("123456789", "target-uuid")
+    assert result is True
+    
+def test_returns_true_with_mixed_event_types():
+    """Test returns True when target event exists among different event types"""
+    log_data = {
+            "organisations": {
+                "123456789": {
+                    "events": [
+                        {
+                            "event_type": "other_event",
+                            "digitaliseringstiltak_report_id": "target-uuid",
+                            "org_number": "123456789"
+                        },
+                        {
+                            "event_type": "skjema_instance_created",
+                            "digitaliseringstiltak_report_id": "target-uuid",
+                            "org_number": "123456789"
+                        }
+                    ]
+                }
+            }
+        }
+    tracker = instance_logging.InstanceTracker(log_data)
+    result = tracker.has_processed_instance("123456789", "target-uuid")
+    assert result is True
+    
+def test_returns_false_when_events_list_empty():
+    """Test returns False when events list is empty"""
+    log_data = {
+            "organisations": {
+                "123456789": {
+                    "events": []
+                }
+            }
+        }
+    tracker = instance_logging.InstanceTracker(log_data)
+    result = tracker.has_processed_instance("123456789", "any-uuid")
+    assert result is False
+ 
