@@ -98,7 +98,7 @@ def main():
 
     tracker = instance_logging.InstanceTracker.from_log_file(Path(__file__).parent.parent / "data" / "instance_log" / "instance_log.json")
     
-    for prefill_data_row in test_prefill_data[:3]:
+    for prefill_data_row in test_prefill_data[:1]:
         instance_logging.validate_prefill_data(prefill_data_row)
         data_model = instance_logging.transform_flat_to_nested_with_prefill(prefill_data_row)
         org_number = prefill_data_row["AnsvarligVirksomhet.Organisasjonsnummer"]
@@ -108,7 +108,7 @@ def main():
             print("Not created because already in log")
             continue
 
-        if regvil_instance_client.instance_created(header, org_number, report_id):
+        if regvil_instance_client.instance_created(org_number, test_config_client_file["tag"], header):
             print("Not created because already in storage")
             continue
 
@@ -136,13 +136,15 @@ def main():
                 }
         created_instance = regvil_instance_client.post_new_instance(header, files)
         instance_meta_data = created_instance.json()
-
         bearer_token = exchange_token_funcs.exchange_token(maskinport_client, secret_value, maskinporten_endpoints) 
         header = {
                     "accept": "application/json",
                     "Authorization": f"Bearer {bearer_token}",
                     "Content-Type": "application/json"
-            }
+                }
+        instance_client_data_meta_data = instance_client.get_meta_data_info(instance_meta_data["data"])
+        _ = regvil_instance_client.tag_instance_data(instance_meta_data["instanceOwner"]["partyId"], instance_meta_data["id"], instance_client_data_meta_data["id"], test_config_client_file["tag"], header)
+
         if created_instance.status_code == 201:
                 tracker.logging_instance(prefill_data_row["AnsvarligVirksomhet.Organisasjonsnummer"], prefill_data_row["digitaliseringstiltak_report_id"], created_instance.json())
                 tracker.save_to_disk()
@@ -153,7 +155,7 @@ def main():
                     "Authorization": f"Bearer {bearer_token}",
                     "Content-Type": "application/json"
                 }
-                updated_instance = regvil_instance_client.update_substatus(instance_meta_data["instanceOwner"]["partyId"], instance_meta_data["id"], prefill_data_row["digitaliseringstiltak_report_id"], header)
+                #updated_instance = regvil_instance_client.tag_instance_data(instance_meta_data["instanceOwner"]["partyId"], updated_instance["id"], instance_meta_data["id"], prefill_data_row["digitaliseringstiltak_report_id"], header)
 
         else:
                 try:
