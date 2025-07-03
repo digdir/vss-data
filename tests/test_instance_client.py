@@ -125,7 +125,7 @@ def test_update_substatus_success():
             "softDeleted": None,
             "isHardDeleted": False,
             "hardDeleted": None,
-            "readStatus": 0,
+            "readStatus": 1,
             "substatus": {
                 "label": "skjema_instance_created",
                 "description": '{"digitaliseringstiltak_report_id": "digi-test-uuid"}',
@@ -150,7 +150,7 @@ def test_update_substatus_success():
                 "contentHash": None,
                 "locked": False,
                 "refs": None,
-                "isRead": False,
+                "isRead": True,
                 "tags": [],
                 "userDefinedMetadata": None,
                 "metadata": None,
