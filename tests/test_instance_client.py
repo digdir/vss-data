@@ -9,6 +9,7 @@ import sys
 import importlib
 import importlib.util
 from typing import Dict, Any
+import uuid
 
 
 def load_in_json(path_to_json_file: Path) -> Dict[str, Any]:
@@ -168,3 +169,173 @@ def test_update_substatus_success():
         "createdBy": "991825827",
         "lastChangedBy": "991825827",
     }
+
+def test_instance_created_found():
+    """Test instance_created returns True when instance exists with matching report_id"""
+    test_config_file = {
+        "base_app_url": "https://digdir.apps.tt02.altinn.no",
+        "base_platfrom_url": "https://platform.tt02.altinn.no/storage/api/v1/instances",
+        "application_owner_organisation": "digdir",
+        "appname": "regvil-2025-initiell",
+    }
+    test_instance_client = instance_client.AltinnInstanceClient.init_from_config(
+        test_config_file
+    )
+    bearer_token = exchange_token_funcs.exchange_token(
+        maskinport_client, secret_value, maskinporten_endpoints
+    )
+    header = {
+        "accept": "application/json",
+        "Authorization": f"Bearer {bearer_token}",
+        "Content-Type": "application/json",
+    }
+    
+    # Test with existing instance that should have the report_id
+    result = test_instance_client.instance_created(
+        header,
+        "310075728",  # org_number
+        "digi-test-uuid"  # report_id that should exist
+    )
+    
+    assert result is True
+
+
+def test_instance_created_not_found():
+    """Test instance_created returns False when instance doesn't exist"""
+    test_config_file = {
+        "base_app_url": "https://digdir.apps.tt02.altinn.no",
+        "base_platfrom_url": "https://platform.tt02.altinn.no/storage/api/v1/instances",
+        "application_owner_organisation": "digdir",
+        "appname": "regvil-2025-initiell",
+    }
+    test_instance_client = instance_client.AltinnInstanceClient.init_from_config(
+        test_config_file
+    )
+    bearer_token = exchange_token_funcs.exchange_token(
+        maskinport_client, secret_value, maskinporten_endpoints
+    )
+    header = {
+        "accept": "application/json",
+        "Authorization": f"Bearer {bearer_token}",
+        "Content-Type": "application/json",
+    }
+    
+    # Test with non-existing report_id
+    result = test_instance_client.instance_created(
+        header,
+        "310075728",  # org_number
+        "non-existing-uuid-12345"  # report_id that shouldn't exist
+    )
+    
+    assert result is False
+
+
+def test_instance_created_different_org():
+    """Test instance_created returns False when searching different organisation"""
+    test_config_file = {
+        "base_app_url": "https://digdir.apps.tt02.altinn.no",
+        "base_platfrom_url": "https://platform.tt02.altinn.no/storage/api/v1/instances",
+        "application_owner_organisation": "digdir",
+        "appname": "regvil-2025-initiell",
+    }
+    test_instance_client = instance_client.AltinnInstanceClient.init_from_config(
+        test_config_file
+    )
+    bearer_token = exchange_token_funcs.exchange_token(
+        maskinport_client, secret_value, maskinporten_endpoints
+    )
+    header = {
+        "accept": "application/json",
+        "Authorization": f"Bearer {bearer_token}",
+        "Content-Type": "application/json",
+    }
+    
+    # Test with different org number
+    result = test_instance_client.instance_created(
+        header,
+        "999999999",  # Different org_number  
+        "digi-test-uuid"  # Same report_id
+    )
+    
+    assert result is False
+
+
+def test_instance_created_integration():
+    """Integration test: Create instance, then verify it exists"""
+    test_config_file = {
+        "base_app_url": "https://digdir.apps.tt02.altinn.no",
+        "base_platfrom_url": "https://platform.tt02.altinn.no/storage/api/v1/instances",
+        "application_owner_organisation": "digdir",
+        "appname": "regvil-2025-initiell",
+    }
+    test_instance_client = instance_client.AltinnInstanceClient.init_from_config(
+        test_config_file
+    )
+    bearer_token = exchange_token_funcs.exchange_token(
+        maskinport_client, secret_value, maskinporten_endpoints
+    )
+    header = {
+        "accept": "application/json",
+        "Authorization": f"Bearer {bearer_token}",
+        "Content-Type": "application/json",
+    }
+    
+    # Generate unique test UUID
+    test_report_id = str(uuid.uuid4())
+    test_org_number = "310075728"
+    
+    # 1. Verify instance doesn't exist initially
+    exists_before = test_instance_client.instance_created(
+        header, test_org_number, test_report_id
+    )
+    assert exists_before is False
+    
+    # 2. Create new instance
+    instance_data = {
+        "appId": "digdir/regvil-2025-initiell",    
+        "instanceOwner": {
+            "personNumber": None,
+            "organisationNumber": test_org_number
+        },
+        "dueBefore": "2025-09-01T12:00:00Z",
+        "visibleAfter": "2025-06-29T00:00:00Z"
+    }
+    
+    files = {
+        'instance': ('instance.json', json.dumps(instance_data), 'application/json'),
+    }
+    bearer_token = exchange_token_funcs.exchange_token(
+        maskinport_client, secret_value, maskinporten_endpoints
+    )
+    header = {
+        "accept": "application/json",
+        "Authorization": f"Bearer {bearer_token}",
+    }
+    
+    created_instance = test_instance_client.post_new_instance(header=header, files=files)
+    assert created_instance.status_code == 201
+    
+    # 3. Update substatus with report_id
+    instance_response = created_instance.json()
+    instance_id = instance_response["id"]
+    party_id = instance_response["instanceOwner"]["partyId"]
+    bearer_token = exchange_token_funcs.exchange_token(
+        maskinport_client, secret_value, maskinporten_endpoints
+    )
+    header = {
+        "accept": "application/json",
+        "Authorization": f"Bearer {bearer_token}",
+         "Content-Type": "application/json",
+    }
+    
+    updated_instance = test_instance_client.update_substatus(
+        party_id, instance_id, test_report_id, header
+    )
+    print(updated_instance.json())
+    assert updated_instance.status_code == 200
+    
+    # 4. Verify instance now exists with report_id
+    exists_after = test_instance_client.instance_created(
+        header, test_org_number, test_report_id
+    )
+    assert exists_after is True

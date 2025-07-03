@@ -81,9 +81,9 @@ def get_default_headers(bearer_token: str) -> Dict[str, str]:
 
 # CELL ********************
 
-def make_api_call(method: str, url: str, headers: Dict[str, str], data: Optional[Dict[str, str]] = None, params: Optional[Dict[str, str]] = None) -> Optional[requests.Response]:
+def make_api_call(method: str, url: str, headers: Dict[str, str], data: Optional[Dict[str, str]] = None, params: Optional[Dict[str, str]] = None, files: Optional[Dict[str, str]] = None) -> Optional[requests.Response]:
     try:
-        response = requests.request(method, url, headers=headers, data=data, params=params)
+        response = requests.request(method, url, headers=headers, data=data, params=params, files=files)
             
         if response.status_code in [200, 201, 204]:  # Success codes
             logging.info(f"API call successful: {method} {url}")
@@ -280,7 +280,6 @@ class AltinnInstanceClient:
                 continue
             if description_data.get("digitaliseringstiltak_report_id") == report_id:
                 return True
-        print(status)
         return False
 
     def complete_instance(self, instanceOwnerPartyId: str, instanceGuid: str, header: Dict[str, str]) -> Optional[requests.Response]:

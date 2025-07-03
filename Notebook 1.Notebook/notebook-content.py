@@ -134,7 +134,6 @@ def main():
         header = {
                     "accept": "application/json",
                     "Authorization": f"Bearer {bearer_token}",
-                    "Content-Type": "application/json"
                 }
         created_instance = regvil_instance_client.mock_test_post_new_instance(header, files)
         print(created_instance.status_code)
@@ -157,6 +156,7 @@ def main():
                     "Content-Type": "application/json"
                 }
                 updated_instance = regvil_instance_client.mock_test_update_substatus(instance_meta_data["instanceOwner"]["partyId"], instance_meta_data["id"], prefill_data_row["digitaliseringstiltak_report_id"], header)
+                print(updated_instance.json())
 
         else:
                 try:
