@@ -98,13 +98,12 @@ def main():
 
     tracker = instance_logging.InstanceTracker.from_log_file(Path(__file__).parent.parent / "data" / "instance_log" / "instance_log.json")
     
-    for prefill_data_row in test_prefill_data[:1]:
+    for prefill_data_row in test_prefill_data[:3]:
         instance_logging.validate_prefill_data(prefill_data_row)
         data_model = instance_logging.transform_flat_to_nested_with_prefill(prefill_data_row)
         org_number = prefill_data_row["AnsvarligVirksomhet.Organisasjonsnummer"]
         report_id = prefill_data_row["digitaliseringstiltak_report_id"]
 
-        # Step 1: Check if already processed (log or API)
         if tracker.has_processed_instance(org_number, report_id):
             print("Not created because already in log")
             continue
@@ -135,8 +134,7 @@ def main():
                     "accept": "application/json",
                     "Authorization": f"Bearer {bearer_token}",
                 }
-        created_instance = regvil_instance_client.mock_test_post_new_instance(header, files)
-        print(created_instance.status_code)
+        created_instance = regvil_instance_client.post_new_instance(header, files)
         instance_meta_data = created_instance.json()
 
         bearer_token = exchange_token_funcs.exchange_token(maskinport_client, secret_value, maskinporten_endpoints) 
@@ -155,8 +153,7 @@ def main():
                     "Authorization": f"Bearer {bearer_token}",
                     "Content-Type": "application/json"
                 }
-                updated_instance = regvil_instance_client.mock_test_update_substatus(instance_meta_data["instanceOwner"]["partyId"], instance_meta_data["id"], prefill_data_row["digitaliseringstiltak_report_id"], header)
-                print(updated_instance.json())
+                updated_instance = regvil_instance_client.update_substatus(instance_meta_data["instanceOwner"]["partyId"], instance_meta_data["id"], prefill_data_row["digitaliseringstiltak_report_id"], header)
 
         else:
                 try:
