@@ -59,6 +59,13 @@ import importlib
 import importlib.util
 import logging
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename=Path(__file__).parent.parent / "data" / "altinn_logging.log"
+)
+logger = logging.getLogger(__name__)
+
 def import_fabric_notebook(notebook_path, module_name):
     """Import a Fabric notebook's Python content"""
     py_file_path = os.path.join(notebook_path, 'notebook-content.py')
@@ -85,6 +92,7 @@ def load_in_json(path_to_json_file: Path) -> Dict[str, Any]:
         return json.load(file)
 
 def main():
+    logger.info("Starting Altinn survey sending instance processing")
     maskinport_client = load_in_json(Path(__file__).parent.parent / "data" / "maskinporten_config.json")
     maskinporten_endpoints = load_in_json(Path(__file__).parent.parent / "data" / "maskinporten_endpoints.json")
     maskinporten_endpoint = maskinporten_endpoints["test"]
@@ -94,21 +102,25 @@ def main():
     regvil_instance_client = instance_client.AltinnInstanceClient.init_from_config(test_config_client_file, {"maskinport_client": maskinport_client, "secret_value": secret_value, "maskinporten_endpoint": maskinporten_endpoint})
 
     tracker = instance_logging.InstanceTracker.from_log_file(Path(__file__).parent.parent / "data" / "instance_log" / "instance_log.json")
-    
-    for prefill_data_row in test_prefill_data[:1]:
+    logger.info(f"Processing {len(test_prefill_data)} organizations")
+
+    for prefill_data_row in test_prefill_data[3:4]:
         instance_logging.validate_prefill_data(prefill_data_row)
         data_model = instance_logging.transform_flat_to_nested_with_prefill(prefill_data_row)
         org_number = prefill_data_row["AnsvarligVirksomhet.Organisasjonsnummer"]
         report_id = prefill_data_row["digitaliseringstiltak_report_id"]
 
+        logger.info(f"Processing org {org_number}, report {report_id}")
+
         if tracker.has_processed_instance(org_number, report_id):
-            print("Instance already in log")
+            logger.info(f"Skipping org {org_number} - already in instance log")
             continue
 
         if regvil_instance_client.instance_created(org_number, test_config_client_file["tag"]):
-            print("Instance already in storage")
+            logger.info(f"Skipping org {org_number} - already in storage")
             continue
-
+        
+        logger.info(f"Creating new instance for org {org_number} and report id {report_id}")
         data_model = instance_logging.transform_flat_to_nested_with_prefill(prefill_data_row)
 
         instance_data = {"appId" : "digdir/regvil-2025-initiell",    
@@ -128,22 +140,29 @@ def main():
         instance_client_data_meta_data = instance_client.get_meta_data_info(instance_meta_data["data"])
 
         if created_instance.status_code == 201:
+                logger.info(f"Successfully created instance for org nr {org_number}/ report id {report_id}: {instance_meta_data['id']}")
                 tracker.logging_instance(prefill_data_row["AnsvarligVirksomhet.Organisasjonsnummer"], prefill_data_row["digitaliseringstiltak_report_id"], created_instance.json())
                 tracker.save_to_disk()
-                doeswork = regvil_instance_client.tag_instance_data(instance_meta_data["instanceOwner"]["partyId"], instance_meta_data["id"], instance_client_data_meta_data["id"], test_config_client_file["tag"])
-                print(doeswork.status_code)
-                print(doeswork.json())
+                tag_result = regvil_instance_client.tag_instance_data(instance_meta_data["instanceOwner"]["partyId"], instance_meta_data["id"], instance_client_data_meta_data["id"], test_config_client_file["tag"])
+                if tag_result.status_code == 201:
+                    logger.info(f"Successfully tagged instance for org {org_number}")
+                else:
+                    logger.error(f"Failed to tag instance for org {org_number}")
+
+
         else:
+                logger.error(f"Failed to create instance for org nr {org_number}/ report id {report_id}: Status {created_instance.status_code}")
                 try:
                     error_details = created_instance.json()
                     error_msg = error_details.get('error', 'Unknown error')
                 except:
                     error_msg = created_instance.text or 'No error details'
 
-                    logging.warning(f"API Error: Org {prefill_data_row['AnsvarligVirksomhet.Organisasjonsnummer']}, "
+                    logger.warning(f"API Error: Org {prefill_data_row['AnsvarligVirksomhet.Organisasjonsnummer']}, "
                                     f"Report {prefill_data_row['digitaliseringstiltak_report_id']} - "
                                     f"Status: {created_instance.status_code} - "
                                     f"Error message: {error_msg}")
+                
 
 if __name__ == "__main__":
     main()
