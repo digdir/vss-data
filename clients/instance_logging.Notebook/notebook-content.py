@@ -277,11 +277,35 @@ def validate_prefill_data(prefill_data_row: Dict[str, Any]) -> bool:
     return True
 
 
-def _is_valid_org_number(org_number: str) -> bool:
-    """Validate Norwegian organisation number (9 digits)"""
-    if not isinstance(org_number, str):
+def _is_valid_org_number(org_number):
+    """
+    Validates a Norwegian organization number using modulus 11 algorithm.
+    
+    Args:
+        org_number (str): The organization number to validate
+        
+    Returns:
+        bool: True if valid, False otherwise
+    """
+    # Remove any spaces or formatting
+    org_number = org_number.replace(' ', '').replace('-', '')
+    # Check if it's exactly 9 digits
+    if len(org_number) != 9 or not org_number.isdigit():
         return False
-    return re.match(r'^\d{9}$', org_number) is not None
+    # Convert to list of integers
+    digits = [int(d) for d in org_number]
+    # Weights for the first 8 digits (from left to right)
+    weights = [3, 2, 7, 6, 5, 4, 3, 2]
+    # Calculate sum of products
+    product_sum = sum(digit * weight for digit, weight in zip(digits[:8], weights))
+    remainder = product_sum % 11
+    if remainder == 0:
+        control_digit = 0
+    elif remainder == 1:
+        return False
+    else:
+        control_digit = 11 - remainder
+    return control_digit == digits[8]
 
 
 def _is_valid_uuid(uuid_string: str) -> bool:
