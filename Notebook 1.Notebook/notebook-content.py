@@ -26,7 +26,7 @@
 
 # CELL ********************
 
-#%run exchange_token_funcs 
+%run exchange_token_funcs 
 
 # METADATA ********************
 
@@ -37,7 +37,18 @@
 
 # CELL ********************
 
-#%run instance_client
+%run instance_client
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+%run instance_logging
 
 # METADATA ********************
 
@@ -66,22 +77,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-def import_fabric_notebook(notebook_path, module_name):
-    """Import a Fabric notebook's Python content"""
-    py_file_path = os.path.join(notebook_path, 'notebook-content.py')
-   
-    spec = importlib.util.spec_from_file_location(module_name, py_file_path)
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[module_name] = module
-    spec.loader.exec_module(module)
-    return module
- 
-# Import your notebooks
-exchange_token_funcs = import_fabric_notebook('auth/exchange_token_funcs.Notebook', 'exchange_token_funcs')
-instance_client = import_fabric_notebook('clients/instance_client.Notebook', 'instance_client')
-instance_logging = import_fabric_notebook('clients/instance_logging.Notebook', 'instance_logging')
-
-
 credential = DefaultAzureCredential()
 client = SecretClient(vault_url="https://keyvaultvss.vault.azure.net/", credential=credential)
 secret = client.get_secret("rapdigtest")
@@ -99,14 +94,14 @@ def main():
     maskinporten_endpoint = maskinporten_endpoints[test_config_client_file["environment"]]
     test_prefill_data = load_in_json(Path(__file__).parent.parent / "data" / "test_virksomheter_prefill_with_uuid.json")
 
-    regvil_instance_client = instance_client.AltinnInstanceClient.init_from_config(test_config_client_file, {"maskinport_client": maskinport_client, "secret_value": secret_value, "maskinporten_endpoint": maskinporten_endpoint})
+    regvil_instance_client = AltinnInstanceClient.init_from_config(test_config_client_file, {"maskinport_client": maskinport_client, "secret_value": secret_value, "maskinporten_endpoint": maskinporten_endpoint})
 
-    tracker = instance_logging.InstanceTracker.from_log_file(Path(__file__).parent.parent / "data" / "instance_log" / "instance_log.json")
+    tracker = InstanceTracker.from_log_file(Path(__file__).parent.parent / "data" / "instance_log" / "instance_log.json")
     logger.info(f"Processing {len(test_prefill_data)} organizations")
 
     for prefill_data_row in test_prefill_data[3:4]:
-        instance_logging.validate_prefill_data(prefill_data_row)
-        data_model = instance_logging.transform_flat_to_nested_with_prefill(prefill_data_row)
+        validate_prefill_data(prefill_data_row)
+        data_model = transform_flat_to_nested_with_prefill(prefill_data_row)
         org_number = prefill_data_row["AnsvarligVirksomhet.Organisasjonsnummer"]
         report_id = prefill_data_row["digitaliseringstiltak_report_id"]
 
@@ -121,7 +116,7 @@ def main():
             continue
         
         logger.info(f"Creating new instance for org {org_number} and report id {report_id}")
-        data_model = instance_logging.transform_flat_to_nested_with_prefill(prefill_data_row)
+        data_model = transform_flat_to_nested_with_prefill(prefill_data_row)
 
         instance_data = {"appId" : "digdir/regvil-2025-initiell",    
                 "instanceOwner": {"personNumber": None,
@@ -137,7 +132,7 @@ def main():
         created_instance = regvil_instance_client.post_new_instance(files)
         instance_meta_data = created_instance.json()
 
-        instance_client_data_meta_data = instance_client.get_meta_data_info(instance_meta_data["data"])
+        instance_client_data_meta_data = get_meta_data_info(instance_meta_data["data"])
 
         if created_instance.status_code == 201:
                 logger.info(f"Successfully created instance for org nr {org_number}/ report id {report_id}: {instance_meta_data['id']}")

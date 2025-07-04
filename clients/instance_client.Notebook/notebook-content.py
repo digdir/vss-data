@@ -25,6 +25,17 @@
 # META }
 
 # CELL ********************
+
+%run exchange_token_funcs 
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
 from functools import wraps
 from typing import Callable, Dict, Optional, Tuple, List
 import requests
@@ -37,7 +48,6 @@ import os
 import importlib
 import sys
 
-
 # METADATA ********************
 
 # META {
@@ -46,19 +56,6 @@ import sys
 # META }
 
 # CELL ********************
-
-def import_fabric_notebook(notebook_path, module_name):
-    """Import a Fabric notebook's Python content"""
-    py_file_path = os.path.join(notebook_path, 'notebook-content.py')
-   
-    spec = importlib.util.spec_from_file_location(module_name, py_file_path)
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[module_name] = module
-    spec.loader.exec_module(module)
-    return module
- 
-# Import your notebooks
-exchange_token_funcs = import_fabric_notebook('auth/exchange_token_funcs.Notebook', 'exchange_token_funcs')
 
 def get_meta_data_info(list_of_data_instance_meta_info: List[Dict[str, str]]) -> Dict[str, str]:
     if not list_of_data_instance_meta_info:
@@ -272,7 +269,7 @@ class AltinnInstanceClient:
 
     def _get_headers(self, content_type=None):
         """Get fresh headers with new token"""
-        token = exchange_token_funcs.exchange_token(
+        token = exchange_token(
             self.maskinport_client, 
             self.secret_value, 
             self.maskinporten_endpoint
