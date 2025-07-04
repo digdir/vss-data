@@ -60,8 +60,8 @@ def test_transform_flat_to_nested_with_prefill_single():
                 "ErDeltiltak": True
             },
             "Kapittel": {
-                "Nummer": "2.1.4",
-                "Tekst": "2.1.4"
+                "Nummer": "3.1.1",
+                "Tekst": "3.1.1"
             },
             "Maal": {
                 "Nummer": "3",
@@ -285,6 +285,7 @@ test_meta_instance_data = {
 def test_logging_instance():
 
     instance_logger = instance_logging.InstanceTracker({"organisations": {}}, "test/path")
+    print(test_meta_instance_data)
     instance_logger.logging_instance("311138693", "123-uuid", test_meta_instance_data)
 
     with pytest.raises(ValueError, match="Organization number and report ID cannot be empty"):

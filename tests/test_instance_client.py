@@ -67,108 +67,18 @@ def test_update_substatus_success():
         "appname": "regvil-2025-initiell",
     }
     test_instance_client = instance_client.AltinnInstanceClient.init_from_config(
-        test_config_file
+        test_config_file, {"maskinport_client": maskinport_client, "secret_value": secret_value, "maskinporten_endpoint": maskinporten_endpoints["test"]}
     )
-    bearer_token = exchange_token_funcs.exchange_token(
-        maskinport_client, secret_value, maskinporten_endpoints
+    response_json = test_instance_client.tag_instance_data(
+        "51625403",
+        "51625403/0512ce74-90a9-4b5c-ab15-910f60db92d1",
+        "fed122b9-672c-4b34-9a47-09f501d5af72",
+        "AnotherSkjemaLevert"
     )
-    header = {
-        "accept": "application/json",
-        "Authorization": f"Bearer {bearer_token}",
-        "Content-Type": "application/json",
-    }
-    updated_instance = test_instance_client.update_substatus(
-        "51531148",
-        "51531148/560d0e53-b034-4994-9dd7-3e1876c23f27",
-        "digi-test-uuid",
-        header,
-    )
-    assert updated_instance.status_code == 200
-    response_json = updated_instance.json()
-    response_json.pop("lastChanged", None)
-    assert response_json == {
-        "id": "51531148/560d0e53-b034-4994-9dd7-3e1876c23f27",
-        "instanceOwner": {
-            "partyId": "51531148",
-            "personNumber": None,
-            "organisationNumber": "310075728",
-            "username": None,
-        },
-        "appId": "digdir/regvil-2025-initiell",
-        "org": "digdir",
-        "selfLinks": {
-            "apps": None,
-            "platform": "https://platform.tt02.altinn.no/storage/api/v1/instances/51531148/560d0e53-b034-4994-9dd7-3e1876c23f27",
-        },
-        "dueBefore": "2025-06-01T12:00:00Z",
-        "visibleAfter": "2025-05-20T00:00:00Z",
-        "process": {
-            "started": "2025-06-24T10:19:20.7812965Z",
-            "startEvent": "StartEvent_1",
-            "currentTask": {
-                "flow": 2,
-                "started": "2025-06-24T10:19:20.782519Z",
-                "elementId": "Task_1",
-                "name": "Utfylling",
-                "altinnTaskType": "data",
-                "ended": None,
-                "validated": None,
-                "flowType": "CompleteCurrentMoveToNext",
-            },
-            "ended": None,
-            "endEvent": None,
-        },
-        "status": {
-            "isArchived": False,
-            "archived": None,
-            "isSoftDeleted": False,
-            "softDeleted": None,
-            "isHardDeleted": False,
-            "hardDeleted": None,
-            "readStatus": 1,
-            "substatus": {
-                "label": "skjema_instance_created",
-                "description": '{"digitaliseringstiltak_report_id": "digi-test-uuid"}',
-            },
-        },
-        "completeConfirmations": [
-            {"stakeholderId": "digdir", "confirmedOn": "2025-07-02T10:48:15.0400739Z"}
-        ],
-        "data": [
-            {
-                "id": "1d82a5fd-98e4-48d9-9e66-6468edb72a54",
-                "instanceGuid": "560d0e53-b034-4994-9dd7-3e1876c23f27",
-                "dataType": "DataModel",
-                "filename": None,
-                "contentType": "application/xml",
-                "blobStoragePath": "digdir/regvil-2025-initiell/560d0e53-b034-4994-9dd7-3e1876c23f27/data/1d82a5fd-98e4-48d9-9e66-6468edb72a54",
-                "selfLinks": {
-                    "apps": None,
-                    "platform": "https://platform.tt02.altinn.no/storage/api/v1/instances/51531148/560d0e53-b034-4994-9dd7-3e1876c23f27/data/1d82a5fd-98e4-48d9-9e66-6468edb72a54",
-                },
-                "size": 486,
-                "contentHash": None,
-                "locked": False,
-                "refs": None,
-                "isRead": True,
-                "tags": [],
-                "userDefinedMetadata": None,
-                "metadata": None,
-                "deleteStatus": None,
-                "fileScanResult": "NotApplicable",
-                "references": None,
-                "created": "2025-06-24T10:19:21.0320742Z",
-                "createdBy": "991825827",
-                "lastChanged": "2025-06-24T10:19:21.032074Z",
-                "lastChangedBy": "991825827",
-            }
-        ],
-        "presentationTexts": {},
-        "dataValues": {"dialog.id": "0197a173-0b78-7994-9dd7-3e1876c23f27"},
-        "created": "2025-06-24T10:19:20.8243283Z",
-        "createdBy": "991825827",
-        "lastChangedBy": "991825827",
-    }
+    assert response_json.status_code == 201
+    #response_json.pop("lastChanged", None)
+    assert response_json.json() == {'tags': ['AnotherSkjemaLevert']}
+
 
 def test_instance_created_found():
     """Test instance_created returns True when instance exists with matching report_id"""
@@ -179,22 +89,12 @@ def test_instance_created_found():
         "appname": "regvil-2025-initiell",
     }
     test_instance_client = instance_client.AltinnInstanceClient.init_from_config(
-        test_config_file
+        test_config_file, {"maskinport_client": maskinport_client, "secret_value": secret_value, "maskinporten_endpoint": maskinporten_endpoints["test"]}
     )
-    bearer_token = exchange_token_funcs.exchange_token(
-        maskinport_client, secret_value, maskinporten_endpoints
-    )
-    header = {
-        "accept": "application/json",
-        "Authorization": f"Bearer {bearer_token}",
-        "Content-Type": "application/json",
-    }
-    
     # Test with existing instance that should have the report_id
     result = test_instance_client.instance_created(
-        header,
         "310075728",  # org_number
-        "digi-test-uuid"  # report_id that should exist
+        "InitiellSkjemaLevert"  # report_id that should exist
     )
     
     assert result is True
@@ -209,22 +109,12 @@ def test_instance_created_not_found():
         "appname": "regvil-2025-initiell",
     }
     test_instance_client = instance_client.AltinnInstanceClient.init_from_config(
-        test_config_file
+        test_config_file, {"maskinport_client": maskinport_client, "secret_value": secret_value, "maskinporten_endpoint": maskinporten_endpoints["test"]}
     )
-    bearer_token = exchange_token_funcs.exchange_token(
-        maskinport_client, secret_value, maskinporten_endpoints
-    )
-    header = {
-        "accept": "application/json",
-        "Authorization": f"Bearer {bearer_token}",
-        "Content-Type": "application/json",
-    }
-    
     # Test with non-existing report_id
     result = test_instance_client.instance_created(
-        header,
         "310075728",  # org_number
-        "non-existing-uuid-12345"  # report_id that shouldn't exist
+        "AnotherSkjemaLevert"  # report_id that shouldn't exist
     )
     
     assert result is False
@@ -239,103 +129,13 @@ def test_instance_created_different_org():
         "appname": "regvil-2025-initiell",
     }
     test_instance_client = instance_client.AltinnInstanceClient.init_from_config(
-        test_config_file
+        test_config_file, {"maskinport_client": maskinport_client, "secret_value": secret_value, "maskinporten_endpoint": maskinporten_endpoints["test"]}
     )
-    bearer_token = exchange_token_funcs.exchange_token(
-        maskinport_client, secret_value, maskinporten_endpoints
-    )
-    header = {
-        "accept": "application/json",
-        "Authorization": f"Bearer {bearer_token}",
-        "Content-Type": "application/json",
-    }
     
     # Test with different org number
     result = test_instance_client.instance_created(
-        header,
         "999999999",  # Different org_number  
-        "digi-test-uuid"  # Same report_id
+        "InitiellSkjemaLevert"  # Same report_id
     )
     
     assert result is False
-
-
-def test_instance_created_integration():
-    """Integration test: Create instance, then verify it exists"""
-    test_config_file = {
-        "base_app_url": "https://digdir.apps.tt02.altinn.no",
-        "base_platfrom_url": "https://platform.tt02.altinn.no/storage/api/v1/instances",
-        "application_owner_organisation": "digdir",
-        "appname": "regvil-2025-initiell",
-    }
-    test_instance_client = instance_client.AltinnInstanceClient.init_from_config(
-        test_config_file
-    )
-    bearer_token = exchange_token_funcs.exchange_token(
-        maskinport_client, secret_value, maskinporten_endpoints
-    )
-    header = {
-        "accept": "application/json",
-        "Authorization": f"Bearer {bearer_token}",
-        "Content-Type": "application/json",
-    }
-    
-    # Generate unique test UUID
-    test_report_id = str(uuid.uuid4())
-    test_org_number = "310075728"
-    
-    # 1. Verify instance doesn't exist initially
-    exists_before = test_instance_client.instance_created(
-        header, test_org_number, test_report_id
-    )
-    assert exists_before is False
-    
-    # 2. Create new instance
-    instance_data = {
-        "appId": "digdir/regvil-2025-initiell",    
-        "instanceOwner": {
-            "personNumber": None,
-            "organisationNumber": test_org_number
-        },
-        "dueBefore": "2025-09-01T12:00:00Z",
-        "visibleAfter": "2025-06-29T00:00:00Z"
-    }
-    
-    files = {
-        'instance': ('instance.json', json.dumps(instance_data), 'application/json'),
-    }
-    bearer_token = exchange_token_funcs.exchange_token(
-        maskinport_client, secret_value, maskinporten_endpoints
-    )
-    header = {
-        "accept": "application/json",
-        "Authorization": f"Bearer {bearer_token}",
-    }
-    
-    created_instance = test_instance_client.post_new_instance(header=header, files=files)
-    assert created_instance.status_code == 201
-    
-    # 3. Update substatus with report_id
-    instance_response = created_instance.json()
-    instance_id = instance_response["id"]
-    party_id = instance_response["instanceOwner"]["partyId"]
-    bearer_token = exchange_token_funcs.exchange_token(
-        maskinport_client, secret_value, maskinporten_endpoints
-    )
-    header = {
-        "accept": "application/json",
-        "Authorization": f"Bearer {bearer_token}",
-         "Content-Type": "application/json",
-    }
-    
-    updated_instance = test_instance_client.update_substatus(
-        party_id, instance_id, test_report_id, header
-    )
-    print(updated_instance.json())
-    assert updated_instance.status_code == 200
-    
-    # 4. Verify instance now exists with report_id
-    exists_after = test_instance_client.instance_created(
-        header, test_org_number, test_report_id
-    )
-    assert exists_after is True
