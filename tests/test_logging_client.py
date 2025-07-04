@@ -244,4 +244,133 @@ def test_returns_false_when_events_list_empty():
     tracker = instance_logging.InstanceTracker(log_data)
     result = tracker.has_processed_instance("123456789", "any-uuid")
     assert result is False
- 
+
+
+test_meta_instance_data = {
+  "id": "51625403/0512ce74-90a9-4b5c-ab15-910f60db92d1",
+  "instanceOwner": {
+    "partyId": "51625403",
+    "personNumber": None,
+    "organisationNumber": "311138693",
+      "party": {
+      "partyId": 51625403,
+      "partyUuid": "1ed8aa98-31ed-4f78-b1f6-f12f46e8de04",
+      "partyTypeName": 2,
+      "orgNumber": "311138693",
+      "name": "OMKOMMEN TRU TIGER AS",
+    }
+  },
+  "appId": "digdir/regvil-2025-initiell",
+  "org": "digdir",
+  "dueBefore": "2025-06-01T12:00:00Z",
+  "visibleAfter": "2025-05-20T00:00:00Z",
+  "data": [
+    {
+      "id": "fed122b9-672c-4b34-9a47-09f501d5af72",
+      "instanceGuid": "0512ce74-90a9-4b5c-ab15-910f60db92d1",
+      "dataType": "DataModel",
+      "contentType": "application/xml",
+      "created": "2025-06-24T10:42:49.5878193Z",
+      "createdBy": "991825827",
+      "lastChanged": "2025-06-24T10:43:23.253583Z",
+      "lastChangedBy": "1260288"
+    },
+  ],
+  "created": "2025-06-24T10:42:49.5447149Z",
+  "createdBy": "991825827",
+  "lastChanged": "2025-06-24T13:17:29.883956Z",
+  "lastChangedBy": "991825827"
+}
+
+def test_logging_instance():
+
+    instance_logger = instance_logging.InstanceTracker({"organisations": {}}, "test/path")
+    instance_logger.logging_instance("311138693", "123-uuid", test_meta_instance_data)
+
+    with pytest.raises(ValueError, match="Organization number and report ID cannot be empty"):
+        instance_logger.logging_instance("", "123-uuid", test_meta_instance_data)
+
+    with pytest.raises(ValueError, match="Organization number and report ID cannot be empty"):
+        instance_logger.logging_instance("311138693", "", test_meta_instance_data)
+    
+    with pytest.raises(ValueError, match="Instance meta data cannot be empty"):
+        instance_logger.logging_instance("311138693", "123-uuid", {})
+
+    # Extract the logged event
+    logged_event = instance_logger.log_changes["311138693"].copy()
+    logged_event.pop("processed_timestamp")
+    expected_event = {
+        'event_type': 'skjema_instance_created',
+        'digitaliseringstiltak_report_id': '123-uuid',
+        'org_number': '311138693',
+        'virksomhets_name': 'OMKOMMEN TRU TIGER AS',
+        'instancePartyId': '51625403',
+        'instanceId': '51625403/0512ce74-90a9-4b5c-ab15-910f60db92d1',
+        'instance_info': {
+            'last_changed': '2025-06-24T13:17:29.883956Z',
+            'last_changed_by': '991825827',
+            'created': '2025-06-24T10:42:49.5447149Z',
+        },
+        'data_info': {
+            'last_changed': '2025-06-24T10:43:23.253583Z',
+            'last_changed_by': '1260288',
+            'created': '2025-06-24T10:42:49.5878193Z',
+            'dataGuid': 'fed122b9-672c-4b34-9a47-09f501d5af72',
+        },
+    }
+    assert logged_event == expected_event
+
+    instance_logger = instance_logging.InstanceTracker({"organisations": {"previous-org-nr":{}}}, "test/path")
+    instance_logger.logging_instance("311138693", "123-uuid", test_meta_instance_data)
+    # Extract the logged event
+    logged_event = instance_logger.log_file["organisations"]["311138693"]["events"][0].copy()
+    logged_event.pop("processed_timestamp")
+    expected_event = {
+        'event_type': 'skjema_instance_created',
+        'digitaliseringstiltak_report_id': '123-uuid',
+        'org_number': '311138693',
+        'virksomhets_name': 'OMKOMMEN TRU TIGER AS',
+        'instancePartyId': '51625403',
+        'instanceId': '51625403/0512ce74-90a9-4b5c-ab15-910f60db92d1',
+        'instance_info': {
+            'last_changed': '2025-06-24T13:17:29.883956Z',
+            'last_changed_by': '991825827',
+            'created': '2025-06-24T10:42:49.5447149Z',
+        },
+        'data_info': {
+            'last_changed': '2025-06-24T10:43:23.253583Z',
+            'last_changed_by': '1260288',
+            'created': '2025-06-24T10:42:49.5878193Z',
+            'dataGuid': 'fed122b9-672c-4b34-9a47-09f501d5af72',
+        },
+    }
+    assert logged_event == expected_event
+    assert list(instance_logger.log_file["organisations"].keys()) == ["previous-org-nr", "311138693"]
+
+    logger = instance_logging.InstanceTracker({"organisations": {}}, "test/path")
+    logger.logging_instance("311138693", "uuid-1", test_meta_instance_data)
+    logger.logging_instance("311138693", "uuid-2", test_meta_instance_data)
+
+    events = logger.log_file["organisations"]["311138693"]["events"]
+    assert len(events) == 2
+    assert events[0]["digitaliseringstiltak_report_id"] == "uuid-1"
+    assert events[1]["digitaliseringstiltak_report_id"] == "uuid-2"
+
+    logger = instance_logging.InstanceTracker({"organisations": {}}, "test/path")
+    logger.logging_instance("311138693", "uuid-1", test_meta_instance_data)
+    first_id = logger.log_changes["311138693"]["digitaliseringstiltak_report_id"]
+
+    logger.logging_instance("311138693", "uuid-2", test_meta_instance_data)
+    second_id = logger.log_changes["311138693"]["digitaliseringstiltak_report_id"]
+
+    assert first_id == "uuid-1"
+    assert second_id == "uuid-2"
+    assert len(logger.log_changes) == 1
+
+    logger = instance_logging.InstanceTracker({"organisations": {}}, "test/path")
+    mismatching_meta = test_meta_instance_data.copy()
+    mismatching_meta['instanceOwner'] = mismatching_meta['instanceOwner'].copy()
+    mismatching_meta['instanceOwner']['organisationNumber'] = "999999999"  # Not matching
+
+    with pytest.raises(ValueError, match="Organization numbers do not match"):
+        logger.logging_instance("311138693", "123-uuid", mismatching_meta)
