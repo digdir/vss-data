@@ -87,14 +87,11 @@ def load_in_json(path_to_json_file: Path) -> Dict[str, Any]:
 def main():
     maskinport_client = load_in_json(Path(__file__).parent.parent / "data" / "maskinporten_config.json")
     maskinporten_endpoints = load_in_json(Path(__file__).parent.parent / "data" / "maskinporten_endpoints.json")
+    maskinporten_endpoint = maskinporten_endpoints["test"]
     test_config_client_file = load_in_json(Path(__file__).parent.parent / "data" / "test_config_client_file.json")
     test_prefill_data = load_in_json(Path(__file__).parent.parent / "data" / "test_virksomheter_prefill_with_uuid.json")
-    bearer_token = exchange_token_funcs.exchange_token(maskinport_client, secret_value, maskinporten_endpoints) 
-    header = {
-                "accept": "application/json",
-                "Authorization": f"Bearer {bearer_token}",
-            }
-    regvil_instance_client = instance_client.AltinnInstanceClient.init_from_config(test_config_client_file)
+
+    regvil_instance_client = instance_client.AltinnInstanceClient.init_from_config(test_config_client_file, {"maskinport_client": maskinport_client, "secret_value": secret_value, "maskinporten_endpoint": maskinporten_endpoint})
 
     tracker = instance_logging.InstanceTracker.from_log_file(Path(__file__).parent.parent / "data" / "instance_log" / "instance_log.json")
     
@@ -105,20 +102,15 @@ def main():
         report_id = prefill_data_row["digitaliseringstiltak_report_id"]
 
         if tracker.has_processed_instance(org_number, report_id):
-            print("Not created because already in log")
+            print("Instance already in log")
             continue
 
-        if regvil_instance_client.instance_created(org_number, test_config_client_file["tag"], header):
-            print("Not created because already in storage")
+        if regvil_instance_client.instance_created(org_number, test_config_client_file["tag"]):
+            print("Instance already in storage")
             continue
 
         data_model = instance_logging.transform_flat_to_nested_with_prefill(prefill_data_row)
-        bearer_token = exchange_token_funcs.exchange_token(maskinport_client, secret_value, maskinporten_endpoints) 
-        header = {
-                "accept": "application/json",
-                "Authorization": f"Bearer {bearer_token}",
-                "Content-Type": "application/json"
-            }
+
         instance_data = {"appId" : "digdir/regvil-2025-initiell",    
                 "instanceOwner": {"personNumber": None,
                 "organisationNumber": data_model["Prefill"]["AnsvarligVirksomhet"]["Organisasjonsnummer"]},
@@ -129,34 +121,18 @@ def main():
                     'instance': ('instance.json', json.dumps(instance_data), 'application/json'),
                     'DataModel': ('datamodel.json', json.dumps(data_model), 'application/json')
         }
-        bearer_token = exchange_token_funcs.exchange_token(maskinport_client, secret_value, maskinporten_endpoints) 
-        header = {
-                    "accept": "application/json",
-                    "Authorization": f"Bearer {bearer_token}",
-                }
-        created_instance = regvil_instance_client.post_new_instance(header, files)
+
+        created_instance = regvil_instance_client.post_new_instance(files)
         instance_meta_data = created_instance.json()
-        bearer_token = exchange_token_funcs.exchange_token(maskinport_client, secret_value, maskinporten_endpoints) 
-        header = {
-                    "accept": "application/json",
-                    "Authorization": f"Bearer {bearer_token}",
-                    "Content-Type": "application/json"
-                }
+
         instance_client_data_meta_data = instance_client.get_meta_data_info(instance_meta_data["data"])
-        _ = regvil_instance_client.tag_instance_data(instance_meta_data["instanceOwner"]["partyId"], instance_meta_data["id"], instance_client_data_meta_data["id"], test_config_client_file["tag"], header)
 
         if created_instance.status_code == 201:
                 tracker.logging_instance(prefill_data_row["AnsvarligVirksomhet.Organisasjonsnummer"], prefill_data_row["digitaliseringstiltak_report_id"], created_instance.json())
                 tracker.save_to_disk()
-                    
-                bearer_token = exchange_token_funcs.exchange_token(maskinport_client, secret_value, maskinporten_endpoints) 
-                header = {
-                    "accept": "application/json",
-                    "Authorization": f"Bearer {bearer_token}",
-                    "Content-Type": "application/json"
-                }
-                #updated_instance = regvil_instance_client.tag_instance_data(instance_meta_data["instanceOwner"]["partyId"], updated_instance["id"], instance_meta_data["id"], prefill_data_row["digitaliseringstiltak_report_id"], header)
-
+                doeswork = regvil_instance_client.tag_instance_data(instance_meta_data["instanceOwner"]["partyId"], instance_meta_data["id"], instance_client_data_meta_data["id"], test_config_client_file["tag"])
+                print(doeswork.status_code)
+                print(doeswork.json())
         else:
                 try:
                     error_details = created_instance.json()
