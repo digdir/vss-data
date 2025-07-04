@@ -25,14 +25,17 @@
 # META }
 
 # CELL ********************
-
-from typing import Dict, Optional, Tuple, List
+from functools import wraps
+from typing import Callable, Dict, Optional, Tuple, List
 import requests
 import logging
 import json
 import uuid
 from datetime import datetime
 from unittest.mock import Mock
+import os
+import importlib
+import sys
 
 
 # METADATA ********************
@@ -44,16 +47,31 @@ from unittest.mock import Mock
 
 # CELL ********************
 
+def import_fabric_notebook(notebook_path, module_name):
+    """Import a Fabric notebook's Python content"""
+    py_file_path = os.path.join(notebook_path, 'notebook-content.py')
+   
+    spec = importlib.util.spec_from_file_location(module_name, py_file_path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[module_name] = module
+    spec.loader.exec_module(module)
+    return module
+ 
+# Import your notebooks
+exchange_token_funcs = import_fabric_notebook('auth/exchange_token_funcs.Notebook', 'exchange_token_funcs')
+
 def get_meta_data_info(list_of_data_instance_meta_info: List[Dict[str, str]]) -> Dict[str, str]:
     if not list_of_data_instance_meta_info:
         raise ValueError("No instance metadata provided.")
 
     for instance in list_of_data_instance_meta_info:
         if (
-            instance.get("dataType") == "DataModel" and 
+            instance.get("dataType") in ["DataModel", "model"] and 
             instance.get("contentType") in ["application/xml", "application/json"]
         ):
             return instance
+        else:
+            continue
 
     raise ValueError("No instance with dataType='DataModel' and contentType='application/xml' or 'application/json' was found.")
 
@@ -240,79 +258,101 @@ def mock_post_new_instance(header: Dict[str, str], files: Dict[str, Tuple[str, s
 
 class AltinnInstanceClient:
 
-    def __init__(self, base_app_url: str, base_platfrom_url: str,  application_owner_organisation: str, appname: str):
+    def __init__(self, base_app_url: str, base_platfrom_url: str,  application_owner_organisation: str, appname: str, maskinport_client: str, secret_value: str, maskinporten_endpoint: str):
         self.base_app_url = base_app_url
         self.base_platfrom_url = base_platfrom_url
         self.application_owner_organisation = application_owner_organisation
         self.appname = appname
         self.basePathApp = f"{self.base_app_url}/{self.application_owner_organisation}/{self.appname}/instances"
         self.basePathPlatform = f"{self.base_platfrom_url}"
+                # Add token management
+        self.maskinport_client = maskinport_client
+        self.secret_value = secret_value
+        self.maskinporten_endpoint = maskinporten_endpoint
+
+    def _get_headers(self, content_type=None):
+        """Get fresh headers with new token"""
+        token = exchange_token_funcs.exchange_token(
+            self.maskinport_client, 
+            self.secret_value, 
+            self.maskinporten_endpoint
+        )
+        headers = {
+            "accept": "application/json",
+            "Authorization": f"Bearer {token}"
+        }
+        if content_type:
+            headers["Content-Type"] = content_type
+        return headers
 
     @classmethod
-    def init_from_config(cls, config_file: Dict[str, str]):
+    def init_from_config(cls, app_config_file: Dict[str, str], maskinport_config_file: Dict[str, str]):
         return cls(
-            base_app_url=config_file["base_app_url"],
-            base_platfrom_url=config_file["base_platfrom_url"],
-            application_owner_organisation=config_file["application_owner_organisation"], 
-            appname=config_file["appname"]
+            base_app_url=app_config_file["base_app_url"],
+            base_platfrom_url=app_config_file["base_platfrom_url"],
+            application_owner_organisation=app_config_file["application_owner_organisation"], 
+            appname=app_config_file["appname"], 
+            maskinport_client=maskinport_config_file["maskinport_client"],
+            secret_value=maskinport_config_file["secret_value"], 
+            maskinporten_endpoint=maskinport_config_file["maskinporten_endpoint"]
         )
     
-    def get_instance(self, instanceOwnerPartyId: str, instanceGuid: str, header: Dict[str, str]) -> Optional[requests.Response]:
+    def get_instance(self, instanceOwnerPartyId: str, instanceGuid: str, header: Optional[Dict[str, str]] = None) -> Optional[requests.Response]:
         instance_id = instanceGuid.split("/")[1]
         url = f"{self.basePathApp}/{instanceOwnerPartyId}/{instance_id}"
-        return make_api_call(method="GET", url=url, headers=header)
+        return make_api_call(method="GET", url=url, headers=self._get_headers("application/json"))
     
-    def get_active_instance(self, instanceOwnerPartyId: str, header: Dict[str, str]) -> Optional[requests.Response]:
+    def get_active_instance(self, instanceOwnerPartyId: str, header: Optional[Dict[str, str]] = None) -> Optional[requests.Response]:
         url = f"{self.basePathApp}/{instanceOwnerPartyId}/active"
-        return make_api_call(method="GET", url=url, headers=header)
+        return make_api_call(method="GET", url=url, headers=self._get_headers("application/json"))
 
-    def post_new_instance(self, header: Dict[str, str], files: Dict[str, Tuple[str, str, str]]) -> Optional[requests.Response]:
+    def post_new_instance(self, files: Dict[str, Tuple[str, str, str]], header: Optional[Dict[str, str]] = None) -> Optional[requests.Response]:
         url = f"{self.basePathApp}"
-        return make_api_call(method="POST", url=url, headers=header, files=files)
+        return make_api_call(method="POST", url=url, headers=self._get_headers(), files=files)
     
-    def mock_test_post_new_instance(self, header: Dict[str, str], files: Dict[str, Tuple[str, str, str]]) -> Dict:
+    def mock_test_post_new_instance(self,  files: Dict[str, Tuple[str, str, str]], header: Optional[Dict[str, str]] = None) -> Dict:
         """Simulates an API response from Altinn after posting a new instance."""
         return mock_post_new_instance(header, files)
-            
-    def get_stored_instances_ids(self, header: Dict[str, str]):
+        
+    def get_stored_instances_ids(self, header: Optional[Dict[str, str]] = None):
         url = f"{self.base_platfrom_url}"
         params = {
         'org': self.application_owner_organisation,
         'appId': f"{self.application_owner_organisation}/{self.appname}"
         }
-        data_storage_instances = make_api_call(method="GET", url=url, headers=header, params=params)
+        data_storage_instances = make_api_call(method="GET", url=url, headers=self._get_headers("application/json"), params=params)
         return extract_instances_ids(data_storage_instances.json())
 
-    def instance_created(self, org_number: str, tag: str, header: Dict[str, str]) -> bool:
-        stored_instances = self.get_stored_instances_ids(header)
-        print(stored_instances)
+    def instance_created(self, org_number: str, tag: str, header: Optional[Dict[str, str]] = None) -> bool:
+        stored_instances = self.get_stored_instances_ids(self._get_headers("application/json"))
         for instance in stored_instances:
             if instance.get("organisationNumber") != org_number:
                 continue
             if tag in instance.get("tags"):
                 return True
         return False
-
-    def complete_instance(self, instanceOwnerPartyId: str, instanceGuid: str, header: Dict[str, str]) -> Optional[requests.Response]:
+    
+    def complete_instance(self, instanceOwnerPartyId: str, instanceGuid: str, header: Optional[Dict[str, str]] = None) -> Optional[requests.Response]:
         instance_id = instanceGuid.split("/")[1]
         url = f"{self.basePathApp}/{instanceOwnerPartyId}/{instance_id}/complete"
-        return make_api_call(method="POST", url=url, headers=header)
+        return make_api_call(method="POST", url=url, headers=self._get_headers("application/json"))
     
-    def update_substatus(self, instanceOwnerPartyId: str, instanceGuid: str, digitaliseringstiltak_report_id: str, header: Dict[str, str]) -> Optional[requests.Response]:
+    def update_substatus(self, instanceOwnerPartyId: str, instanceGuid: str, digitaliseringstiltak_report_id: str, header: Optional[Dict[str, str]] = None) -> Optional[requests.Response]:
         instance_id = instanceGuid.split("/")[1]
         url = f"{self.basePathApp}/{instanceOwnerPartyId}/{instance_id}/substatus"
         payload = {
             "label": "skjema_instance_created",
             "description": json.dumps({"digitaliseringstiltak_report_id": digitaliseringstiltak_report_id})
         }
-        return make_api_call(method="PUT", url=url, headers=header, data=json.dumps(payload))
+        return make_api_call(method="PUT", url=url, headers=self._get_headers(), data=json.dumps(payload))
     
-    def tag_instance_data(self, instanceOwnerPartyId: str, instanceGuid: str, dataGuid: str, tag: str, header: Dict[str, str]) -> Optional[requests.Response]:
+    def tag_instance_data(self, instanceOwnerPartyId: str, instanceGuid: str, dataGuid: str, tag: str, header: Optional[Dict[str, str]] = None) -> Optional[requests.Response]:
         instance_id = instanceGuid.split("/")[1]
         url = f"{self.basePathApp}/{instanceOwnerPartyId}/{instance_id}/data/{dataGuid}/tags"
-        return make_api_call(method="POST", url=url, headers=header, data=json.dumps(tag))
+        print(url)
+        return make_api_call(method="POST", url=url, headers=self._get_headers("application/json"), data=json.dumps(tag))
     
-    def mock_test_update_substatus(self, instanceOwnerPartyId: str, instanceGuid: str, digitaliseringstiltak_report_id: str, header: Dict[str, str]):
+    def mock_test_update_substatus(self, instanceOwnerPartyId: str, instanceGuid: str, digitaliseringstiltak_report_id: str, header: Optional[Dict[str, str]] = None):
         return mock_update_substatus(instanceOwnerPartyId, instanceGuid, digitaliseringstiltak_report_id)
 
 # METADATA ********************

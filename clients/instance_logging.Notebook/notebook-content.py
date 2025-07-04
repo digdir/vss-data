@@ -92,16 +92,19 @@ class InstanceTracker:
         if not org_number or not digitaliseringstiltak_report_id:
           raise ValueError("Organization number and report ID cannot be empty")
         
+        if not instance_meta_data:
+            raise ValueError("Instance meta data cannot be empty")
+
         if org_number != instance_meta_data['instanceOwner'].get("organisationNumber"):
             raise ValueError(f"Organization numbers do not match: {org_number} != {instance_meta_data['instanceOwner'].get('organisationNumber')}")
-
+        
         datamodel_metadata = get_meta_data_info(instance_meta_data["data"])
         instance_log_entry = {
             "event_type": "skjema_instance_created",
             "digitaliseringstiltak_report_id": digitaliseringstiltak_report_id, 
             "org_number": org_number,
             "virksomhets_name": instance_meta_data.get("instanceOwner").get("party").get("name"),
-            "processed_timestamp": datetime.datetime.utcnow().isoformat(),
+            "processed_timestamp": datetime.datetime.now(datetime.UTC).isoformat(),
             "instancePartyId": instance_meta_data['instanceOwner'].get("partyId"),
             "instanceId": instance_meta_data.get("id"),
             "instance_info": {
