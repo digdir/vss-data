@@ -95,8 +95,8 @@ def main():
     logger.info("Starting Altinn survey sending instance processing")
     maskinport_client = load_in_json(Path(__file__).parent.parent / "data" / "maskinporten_config.json")
     maskinporten_endpoints = load_in_json(Path(__file__).parent.parent / "data" / "maskinporten_endpoints.json")
-    maskinporten_endpoint = maskinporten_endpoints["test"]
     test_config_client_file = load_in_json(Path(__file__).parent.parent / "data" / "test_config_client_file.json")
+    maskinporten_endpoint = maskinporten_endpoints[test_config_client_file["environment"]]
     test_prefill_data = load_in_json(Path(__file__).parent.parent / "data" / "test_virksomheter_prefill_with_uuid.json")
 
     regvil_instance_client = instance_client.AltinnInstanceClient.init_from_config(test_config_client_file, {"maskinport_client": maskinport_client, "secret_value": secret_value, "maskinporten_endpoint": maskinporten_endpoint})
@@ -113,11 +113,11 @@ def main():
         logger.info(f"Processing org {org_number}, report {report_id}")
 
         if tracker.has_processed_instance(org_number, report_id):
-            logger.info(f"Skipping org {org_number} - already in instance log")
+            logger.info(f"Skipping org {org_number} and report {report_id} - already in instance log")
             continue
 
         if regvil_instance_client.instance_created(org_number, test_config_client_file["tag"]):
-            logger.info(f"Skipping org {org_number} - already in storage")
+            logger.info(f"Skipping org {org_number} and report {report_id}- already in storage")
             continue
         
         logger.info(f"Creating new instance for org {org_number} and report id {report_id}")
