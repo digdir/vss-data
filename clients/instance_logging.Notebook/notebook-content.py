@@ -82,7 +82,7 @@ class InstanceTracker:
         org_data = self.log_file.get("organisations", {}).get(org_number, {})
         events = org_data.get("events", [])
         for event in events:
-            if (event.get("event_type") == "skjema_instance_created" and
+            if (event.get("event_type") == "initiell_skjema_instance_created" and
                 event.get("digitaliseringstiltak_report_id") == digitaliseringstiltak_report_id):
                 return True
         return False
@@ -100,7 +100,7 @@ class InstanceTracker:
         
         datamodel_metadata = get_meta_data_info(instance_meta_data["data"])
         instance_log_entry = {
-            "event_type": "skjema_instance_created",
+            "event_type": "initiell_skjema_instance_created",
             "digitaliseringstiltak_report_id": digitaliseringstiltak_report_id, 
             "org_number": org_number,
             "virksomhets_name": instance_meta_data.get("instanceOwner").get("party").get("name"),
