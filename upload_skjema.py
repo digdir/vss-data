@@ -45,13 +45,13 @@ def main():
 
         logger.info(f"Processing org {org_number}, report {report_id}")
 
-        #if tracker.has_processed_instance(org_number, report_id):
-        #    logger.info(f"Skipping org {org_number} and report {report_id} - already in instance log")
-        #    continue
+        if tracker.has_processed_instance(org_number, report_id):
+            logger.info(f"Skipping org {org_number} and report {report_id} - already in instance log")
+            continue
 
-        #if regvil_instance_client.instance_created(org_number, test_config_client_file["tag"]):
-        #    logger.info(f"Skipping org {org_number} and report {report_id}- already in storage")
-        #    continue
+        if regvil_instance_client.instance_created(org_number, test_config_client_file["tag"]):
+            logger.info(f"Skipping org {org_number} and report {report_id}- already in storage")
+            continue
         
         logger.info(f"Creating new instance for org {org_number} and report id {report_id}")
 
