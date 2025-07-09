@@ -172,7 +172,6 @@ def validate_prefill_data(prefill_data_row: Dict[str, Any]) -> bool:
         "Kontaktperson.EPostadresse",
         "Tiltak.Nummer",
         "Tiltak.Tekst", 
-        "Tiltak.Kortnavn",
         "Tiltak.ErDeltiltak",
         "Kapittel.Nummer",
         "Kapittel.Tekst",
