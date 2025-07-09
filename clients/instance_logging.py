@@ -146,7 +146,6 @@ def transform_flat_to_nested_with_prefill(flat_record):
             "Tiltak": {
                 "Nummer": get_required_key(flat_record,"Tiltak.Nummer"),
                 "Tekst":  get_required_key(flat_record,"Tiltak.Tekst"),
-                "Kortnavn":  get_required_key(flat_record,"Tiltak.Kortnavn"),
                 "ErDeltiltak":  get_required_key(flat_record,"Tiltak.ErDeltiltak")
             },
             "Kapittel": {
