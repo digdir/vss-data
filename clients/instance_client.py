@@ -279,7 +279,7 @@ class AltinnInstanceClient:
         self,
         files: Dict[str, Tuple[str, str, str]],
         header: Optional[Dict[str, str]] = None,
-    ) -> Optional[requests.Response]:
+    ) -> requests.Response:
         url = f"{self.basePathApp}"
         return make_api_call(
             method="POST", url=url, headers=self._get_headers(), files=files
@@ -338,25 +338,6 @@ class AltinnInstanceClient:
             method="POST", url=url, headers=self._get_headers("application/json")
         )
 
-    def update_substatus(
-        self,
-        instanceOwnerPartyId: str,
-        instanceGuid: str,
-        digitaliseringstiltak_report_id: str,
-        header: Optional[Dict[str, str]] = None,
-    ) -> Optional[requests.Response]:
-        instance_id = instanceGuid.split("/")[1]
-        url = f"{self.basePathApp}/{instanceOwnerPartyId}/{instance_id}/substatus"
-        payload = {
-            "label": "skjema_instance_created",
-            "description": json.dumps(
-                {"digitaliseringstiltak_report_id": digitaliseringstiltak_report_id}
-            ),
-        }
-        return make_api_call(
-            method="PUT", url=url, headers=self._get_headers(), data=json.dumps(payload)
-        )
-
     def tag_instance_data(
         self,
         instanceOwnerPartyId: str,
@@ -364,7 +345,7 @@ class AltinnInstanceClient:
         dataGuid: str,
         tag: str,
         header: Optional[Dict[str, str]] = None,
-    ) -> Optional[requests.Response]:
+    ) -> requests.Response:
         instance_id = instanceGuid.split("/")[1]
         url = f"{self.basePathApp}/{instanceOwnerPartyId}/{instance_id}/data/{dataGuid}/tags"
         return make_api_call(
