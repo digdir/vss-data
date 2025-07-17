@@ -12,6 +12,7 @@ repos:
         entry: mypy
         language: system
         types: [python]
+        args: [--explicit-package-bases]
 
       - id: flake8
         name: flake8 (system)
