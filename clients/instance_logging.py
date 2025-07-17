@@ -1,7 +1,8 @@
 from __future__ import annotations
 import re
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 import json
+from pathlib import Path
 import datetime
 import os
 import shutil
@@ -25,14 +26,14 @@ def _write_json_file(log_data: Dict[str, Any], file_path: str) -> None:
 
 class InstanceTracker:
     def __init__(
-        self, log_file: Dict[str, Any], log_path: Optional[str] = None
+        self, log_file: Dict[str, Any], log_path: Optional[Union[str, Path]] = None
     ) -> None:
         self.log_file: Dict[str, Any] = log_file
         self.log_changes: Dict[str, Any] = {}
-        self.log_path = log_path
+        self.log_path = str(log_path) if log_path is not None else None
 
     @classmethod
-    def from_log_file(cls, path_to_json_file: str) -> InstanceTracker:
+    def from_log_file(cls, path_to_json_file: Union[Path, str]) -> InstanceTracker:
         try:
             with open(path_to_json_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
