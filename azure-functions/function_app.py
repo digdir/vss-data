@@ -1,7 +1,7 @@
 import azure.functions as func
 import logging
-from typing import Dict
-from azure.identity import DefaultAzureCredential
+from azure.identity import DefaultAzureCredential, ClientSecretCredential
+from azure.keyvault.secrets import SecretClient
 import requests
 import os
 
@@ -9,7 +9,15 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 def get_fabric_token():
     credential = DefaultAzureCredential()
-    token = credential.get_token("https://api.fabric.microsoft.com/.default").token
+    secret_client = SecretClient(vault_url="https://keyvaultvss.vault.azure.net/", credential=credential)
+    client_secret = secret_client.get_secret(os.environ["FABRIC_SECRET_NAME"]).value
+
+    fabric_credential = ClientSecretCredential(
+    tenant_id=os.environ["TENANT_ID"],
+    client_id=os.environ["CLIENT_ID"],
+    client_secret=client_secret
+)
+    token = fabric_credential.get_token("https://api.fabric.microsoft.com/.default").token
     return token
 
 def trigger_fabric_notebook(token: str, notebook_id: str, workspace_id: str, instance_id: str, party_id: str):
@@ -68,3 +76,25 @@ def http_post(req: func.HttpRequest) -> func.HttpResponse:
     except Exception as e:
         logging.error(f"Error: {e}")
         return func.HttpResponse(f"Internal Server Error: {str(e)}", status_code=500)
+
+
+@app.route(route="altinnwebhook", auth_level=func.AuthLevel.ANONYMOUS)
+def altinnwebhook(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
+
+    name = req.params.get('name')
+    if not name:
+        try:
+            req_body = req.get_json()
+        except ValueError:
+            pass
+        else:
+            name = req_body.get('name')
+
+    if name:
+        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
+    else:
+        return func.HttpResponse(
+             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
+             status_code=200
+        )
