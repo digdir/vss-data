@@ -8,6 +8,21 @@ import shutil
 class PrefillValidationError(Exception):
     pass
 
+def find_event_by_instance(log_data: dict, instance_id: str, event_type: str):
+    organisations = log_data.get("organisations", {})
+    if not organisations:
+        raise ValueError("Log data is empty.")
+    for _, org_data in organisations.items():
+        events = org_data.get("events", [])
+        for event in events:
+            _, event_instance_id = event.get("instanceId").split('/')
+            if (event.get("event_type") == event_type) & (event_instance_id == instance_id):
+                return event
+    raise ValueError(
+        f"No matching event found for instance_id='{instance_id}', "
+        f"event_type='{event_type}' in log data."
+    )
+
 def _write_json_file(log_data: Dict[str, Any], file_path: str) -> None:
     file_path_str = str(file_path)
 
@@ -58,7 +73,7 @@ class InstanceTracker:
             look_up_events = [event for event in meta_info["events"] if event["event_type"] == event_type]
             all_look_up_events.extend(look_up_events)
         return all_look_up_events
-
+      
     def logging_varlsing(self, org_number: str, org_name: str, digitaliseringstiltak_report_id: str, shipment_id: str, recipientEmail: str, event_type: str):
         if not org_number or not digitaliseringstiltak_report_id:
           raise ValueError("Organization number and report ID cannot be empty")
@@ -76,6 +91,7 @@ class InstanceTracker:
             # Simplified - self.log_file["organisations"] already exists from initialization
         if org_number not in self.log_file["organisations"]:
             self.log_file["organisations"][org_number] = {"events": []}
+
 
         self.log_file["organisations"][org_number]["events"].append(instance_log_entry)
         self.log_changes[org_number] = instance_log_entry
@@ -166,7 +182,6 @@ def transform_flat_to_nested_with_prefill(flat_record):
             "Tiltak": {
                 "Nummer": get_required_key(flat_record,"Tiltak.Nummer"),
                 "Tekst":  get_required_key(flat_record,"Tiltak.Tekst"),
-                "Kortnavn":  get_required_key(flat_record,"Tiltak.Kortnavn"),
                 "ErDeltiltak":  get_required_key(flat_record,"Tiltak.ErDeltiltak")
             },
             "Kapittel": {
@@ -193,7 +208,6 @@ def validate_prefill_data(prefill_data_row: Dict[str, Any]) -> bool:
         "Kontaktperson.EPostadresse",
         "Tiltak.Nummer",
         "Tiltak.Tekst", 
-        "Tiltak.Kortnavn",
         "Tiltak.ErDeltiltak",
         "Kapittel.Nummer",
         "Kapittel.Tekst",
